@@ -1,0 +1,61 @@
+<div >
+  <div class="container">
+    <div class="row">
+      <div class="col-11 col-md-8 m-auto">
+        <div class="form-bg mt-5  ">
+          <div class="pt-5 pb-5">
+            <a href="">
+              <img src="/assets/images/logo.png">
+            </a>
+          </div>
+          <form [formGroup]="signupForm">
+            <div class="form-heading mb-4">
+              <h3> Create your account </h3>
+            </div>
+            <div class="custom-form">
+              <div class="form-group">
+                <input type="text" name="" class="form-control" placeholder="First name" formControlName="firstName">
+                <small [hidden]="signupForm.controls.firstName.valid || signupForm.controls.firstName.pristine" class="text-danger">
+                  First Name is required
+                </small>
+              </div>
+              <div class="form-group">
+                <input type="text" name="" class="form-control" placeholder="Last name" formControlName="lastName">
+                <small [hidden]="signupForm.controls.lastName.valid || signupForm.controls.lastName.pristine" class="text-danger">
+                  Last name is required
+                </small>
+              </div>
+              <div class="form-group">
+                <input type="email" name="" class="form-control" placeholder="Email address" formControlName="email">
+                <small [hidden]="signupForm.controls.email.valid || signupForm.controls.email.pristine" class="text-danger">
+                  Valid Email is required
+                </small>
+              </div>
+              <div class="form-group">
+                <input type="password" name="" class="form-control" placeholder="Password" formControlName="password">
+                <small [hidden]="signupForm.controls.password.valid || signupForm.controls.password.pristine" class="text-danger">
+                  Password is required
+                </small>
+              </div>
+              <div>
+                <ul class="custom-checkbox">
+                  <li>
+                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1" formControlName="acceptTerms">
+                    <label for="styled-checkbox-1">Agree with the
+                      <a href="#">Terms &amp; Privacy</a>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="button">
+                <a class="btn signin-btn" (click)="signup()" [ngClass]="{'btn-invalid' : signupForm.invalid}">SIGN UP</a>
+              </div>
+              <div class="button pb-5 pt-4">
+                <a routerLink="/signin" class="btn btn-signup">SIGN IN</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

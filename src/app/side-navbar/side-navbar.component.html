@@ -1,0 +1,41 @@
+
+         <!-- Main Sidebar Container -->
+         <aside class="main-sidebar sidebar-dark-primary" *ngIf="isActive('games')">
+            <!-- Brand Logo -->
+            <!-- Sidebar -->
+            <div class="sidebar">
+               <!-- Sidebar Menu -->
+               <nav class="mt-2">
+                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                     <li class="nav-header"> PLATFORMS </li>
+                     <li class="nav-item">
+                        <a (click)="clickFilter('pc')" [ngClass]="{'active': platFormType==='pc'}" class="nav-link ">
+                           <img class="sidebar-menu-icon" src="/assets/images/pc-game-icon.png">
+                           <p>
+                              PC
+                           </p>
+                        </a>
+                     </li>
+                     <li class="nav-item">
+                        <a (click)="clickFilter('android')" [ngClass]="{'active': platFormType==='android'}" class="nav-link ">
+                           <img class="sidebar-menu-icon" src="/assets/images/android.svg">
+                           <p>
+                              Android
+                           </p>
+                        </a>
+                     </li>
+                     <li class="nav-item">
+                        <a (click)="clickFilter('ios')" [ngClass]="{'active': platFormType==='ios'}" class="nav-link ">
+                           <img class="sidebar-menu-icon" src="/assets/images/apple.svg">
+                           <p>
+                              Ios
+                           </p>
+                        </a>
+                     </li>
+                  </ul>
+               </nav>
+               <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+         </aside>
+         

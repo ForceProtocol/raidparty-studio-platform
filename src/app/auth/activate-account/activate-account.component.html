@@ -1,0 +1,29 @@
+
+<div>
+	<div class="container">
+		<div class="row"> 
+ 				<div class="col-11 col-md-8 m-auto">
+ 			<div class="form-bg mt-5  ">
+		    <div class="pt-5 pb-5">
+            <a href=""><img src="/assets/images/logo.png"></a>
+          </div>
+          <form [formGroup]="activationForm">
+            <div class="form-heading mb-4">
+              <h3> Please enter your PIN </h3>
+            </div>
+            <div class="custom-form">
+              <div class="form-group">
+                <input type="text" name="" class="form-control" placeholder="pin" formControlName="pin">
+              </div>
+              <div class="button">
+                <a  (click)="activatePlayer()" class="btn signin-btn"> Activate </a>
+              </div>
+              <div class="button pb-5 pt-4">
+                <a routerLink="/login" class="btn btn-signup">Login</a>
+              </div>
+            </div>
+          </form>
+      </div>
+</div>
+</div>
+</div>

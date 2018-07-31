@@ -1,0 +1,82 @@
+<div class="content-wrapper">
+
+    <div class="content-header">
+
+      <div class="container-fluid">
+
+        <div class="row mb-2">
+
+          <div class="col-sm-6">
+            <h4 class="m-0 text-dark">Active Games</h4>
+          </div>
+          <!-- /.col -->
+
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+
+    <section class="content">
+
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-lg-3 col-sm-6 col-12" *ngFor="let game of games">
+            <div class="card card-info card-outline">
+              <img class="img-fluid game-list-img" src={{game.avatar}}>
+
+              <li class="list-group-item game-title-li">
+                <h3>{{game.title}}</h3>
+                <div class="game-description" [innerHTML]="game.description">
+                </div>
+              </li>
+              <li class="list-group-item popover-hover">
+                <button type="button" class="popover-btn" data-toggle="collapse" [attr.data-target]="'#' + game.game_id">
+                  <b>Demographics &amp; Stats</b>
+                </button>
+                <div id={{game.game_id}} class="collapse">
+
+                  <ul class="p-0 mt-2 ">
+                    <li class="list-group-item popover-hover mt-2">
+                      <ng-template #popContent>
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th>Age Range:</th>
+                              <th>23 - 40</th>
+                            </tr>
+                            <tr>
+                              <th>Gender</th>
+                              <th>82% Male | 18% Female</th>
+                            </tr>
+                            <tr>
+                              <th>Location</th>
+                              <th>Spain, Latin America</th>
+                            </tr>
+                          </thead>
+                        </table>
+                      </ng-template>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <div>
+                <div class="btn-group w-100">
+                  <a [routerLink]="['/start-campaign', game.id]" class="btn btn-block bg-dark">
+                    <button type="button" class="btn btn-block bg-dark">
+                      start campaign
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
