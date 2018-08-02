@@ -27,7 +27,11 @@
 
           <div class="col-10 col-md-8 table">
 
-            <table class="table table-hover">
+            <div *ngIf="gameAdAssets.length < 1" class="alert alert-info">
+              <p>You do not have any advertising campaigns yet</p>
+            </div>
+
+            <table *ngIf="gameAdAssets.length > 0" class="table table-hover">
               <thead>
                 <tr>
                   <th></th>
