@@ -27,6 +27,7 @@ import { SideNavbarComponent } from './side-navbar/side-navbar.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
+import { WalletComponent } from './wallet/wallet.component';
 import { StartCampaignComponent } from './start-campaign/start-campaign.component';
 import { ActivateAccountComponent } from './auth/activate-account/activate-account.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -49,6 +50,7 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
     TopNavbarComponent,
     DashboardComponent,
     CampaignsComponent,
+    WalletComponent,
     StartCampaignComponent,
     ActivateAccountComponent,
     NotificationsComponent,

@@ -24,21 +24,30 @@ export class GameAdAssetService {
   }
 
   createCampaign(params){
-    console.log("params sent to createcampaign: ",params);
     let campaignData = this.http.post(`${environment.API_HOST}/web/advertiser/create-campaign?token=${this.token}`,params)
     .map(response => response);
     return campaignData;
   }
 
 
-  getGameAdCampaigns(){
-    return this.http.get(`${environment.API_HOST}/web/advertiser/campaigns?token=${this.token}`)
+  getGameAdCampaigns(active,archived){
+    return this.http.get(`${environment.API_HOST}/web/advertiser/campaigns?token=${this.token}&active=${active}&archived=${archived}`)
     .map(response => response);
   }
 
 
   deleteCampaign(campaignId){
     return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/delete?token=${this.token}`,{campaignId: campaignId})
+    .map(response => response);
+  }
+
+  archiveCampaign(campaignId,archiveState){
+    return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/archive?token=${this.token}`,{campaignId: campaignId, archived:archiveState})
+    .map(response => response);
+  }
+
+  activateCampaign(gameAdAssetId,activeState){
+    return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/activate?token=${this.token}`,{gameAdAssetId: gameAdAssetId, active:activeState})
     .map(response => response);
   }
 

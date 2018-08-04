@@ -60,15 +60,15 @@ export class AuthService implements CanActivate {
     return this.http.post(`${environment.API_HOST}/web/advertiser/reset-password`, params);
   }
 
-  changePassword(params, userId) {
-    return this.http.post(`${environment.API_HOST}/web/advertiser/change-password?userId=${userId}`, params)
+  changePassword(params) {
+    return this.http.post(`${environment.API_HOST}/web/advertiser/change-password`, params)
       .map((response: any) => {
         return response;
       });
   }
 
-  activateUser(userId, pin) {
-    return this.http.post(`${environment.API_HOST}/web/advertiser/activate`, { userId, pin })
+  activateUser(userId, pin, email) {
+    return this.http.post(`${environment.API_HOST}/web/advertiser/activate`, { userId:userId, pin:pin, email:email })
       .map((response: any) => {
         return response;
       });

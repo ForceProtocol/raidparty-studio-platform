@@ -42,14 +42,14 @@ export class LoginComponent implements OnInit {
   login() {
     this.auth.login(this.loginForm.value)
       .subscribe((data) => {
-        this.toaster.success('Success', "Logged in successfully", {
+        this.toaster.success("Logged in successfully",'Success',{
           timeOut: 3000,
           positionClass: "toast-top-right"
         });
         this.router.navigate(['/dashboard']);
       },
         (errorObj) => {
-          this.toaster.error('Error', errorObj.error.err, {
+          this.toaster.error(errorObj.error.err, 'Error', {
             timeOut: 3000,
             positionClass: 'toast-top-center'
           });

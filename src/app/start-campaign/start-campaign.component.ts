@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth.service';
@@ -18,7 +19,9 @@ import * as moment from 'moment';
 })
 export class StartCampaignComponent implements OnInit, OnDestroy {
   gameId: number;
+  gameAdAssetId: number;
   gameAssets: any;
+  newCampaign: boolean;
   selectedGameAssetDescription: any;
   selectedGameAssetTitle: string;
   selectedGameAssetScreenshot: string;
@@ -26,6 +29,9 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
   selectedGameAssetHeight: string;
   selectedGameAssetSample: string;
   selectedGameAssetType: string;
+  selectedGameAvgExposure: number;
+  selectedGameAvgSession: number;
+  selectedGameExposurePercent: number;
   game: any;
   user: any;
   token: any;
@@ -52,6 +58,7 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
     private gameService: GameService,
     private route: ActivatedRoute,
     private router: Router,
+    private titleService: Title,
     private auth: AuthService
   ) {
     const user = localStorage.getItem('user');
@@ -59,14 +66,21 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
       this.user = JSON.parse(user);
       this.token = localStorage.getItem('token');
     }
+
     this.createForm();
   }
 
 
   ngOnInit() {
+    this.titleService.setTitle('Start New Campaign');
     this.game = {title:''};
     this.sub = this.route.params.subscribe(params => {
        this.gameId = +params['gameId']; // (+) converts string 'id' to a number
+
+       if(typeof params['gameAdAssetId'] !== 'undefined'){
+         this.gameAdAssetId = +params['gameAdAssetId'];
+       }
+
        this.loadGameData(this.gameId);
     });
 
@@ -74,6 +88,9 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
     this.selectedGameAssetTitle = "Pending selection";
     this.selectedGameAssetDescription = "Please choose a game asset from the left option to select placement of your advert.";
     this.selectedGameAssetScreenshot = "/assets/images/game-assets/screenshots/blank.png";
+    this.selectedGameAvgExposure = 0;
+    this.selectedGameAvgSession = 0;
+    this.selectedGameExposurePercent = 0;
 
     // Initialise form File Uploads
     this.initFileUploads();
@@ -190,7 +207,7 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
           this.game = data;
       }, errObj => {
-        this.toaster.error('Error', errObj.error.err, {
+        this.toaster.error(errObj.error.err, 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
@@ -200,7 +217,7 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
           this.gameAssets = data;
       }, errObj => {
-        this.toaster.error('Error', errObj.error.err, {
+        this.toaster.error(errObj.error.err, 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
@@ -256,14 +273,14 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
 
     this.gameAdAssetService.createCampaign(this.campaignForm.value)
       .subscribe((data) => {
-        this.toaster.success("Your new advertisement campaign was created successfully", 'New Campaign Created', {
+        this.toaster.success("Your new advertisement campaign was created successfully. You will need to await for the game owner to approve your advert before it goes live.", 'New Campaign Created', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
         this.router.navigate(['/campaigns']);
       },
-      (errorObj) => {
-        this.toaster.error('Error', errorObj.error.err, {
+      (errObj) => {
+        this.toaster.error(errObj.error.err, 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
@@ -280,6 +297,9 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
     this.selectedGameAssetWidth = selectedGameAsset[0].width;
     this.selectedGameAssetSample = environment.API_HOST + "/web/advertiser/download?item=" + encodeURI(selectedGameAsset[0].sample);
     this.selectedGameAssetType = selectedGameAsset[0].type;
+    this.selectedGameAvgExposure = selectedGameAsset[0].avgExposure;
+    this.selectedGameAvgSession = selectedGameAsset[0].avgSession;
+    this.selectedGameExposurePercent = (this.selectedGameAvgExposure / this.selectedGameAvgSession) * 100;
 
     if(selectedGameAsset[0].screenshot != null && selectedGameAsset[0].screenshot != "null"){
       this.selectedGameAssetScreenshot = selectedGameAsset[0].screenshot;

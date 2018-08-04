@@ -15,8 +15,9 @@ export class ForgotPasswordComponent implements OnInit {
   changePasswordForm: FormGroup;
   error: string;
   isForgetPassword: boolean;
-  playerId: string;
+  userId: string;
   pin: string;
+  email: string;
 
 
   constructor(private fb: FormBuilder,
@@ -32,13 +33,23 @@ export class ForgotPasswordComponent implements OnInit {
 
   createForm() {
 
-    if (this.activatedRoute.snapshot.queryParams.playerId) {
+    if (this.activatedRoute.snapshot.queryParams.user && 
+        this.activatedRoute.snapshot.queryParams.pin &&
+        this.activatedRoute.snapshot.queryParams.email) {
+
       this.isForgetPassword = false;
-      this.playerId = this.activatedRoute.snapshot.queryParams.playerId;
+      this.userId = this.activatedRoute.snapshot.queryParams.user;
+      this.email = this.activatedRoute.snapshot.queryParams.email;
+      this.pin = this.activatedRoute.snapshot.queryParams.pin;
+
       this.changePasswordForm = this.fb.group({
         password: ['', Validators.required],
-        pin: ['', Validators.required]
+        passwordCheck: ['', Validators.required],
+        pin: [this.pin,Validators.required],
+        email: [this.email,Validators.required],
+        userId: [this.userId,Validators.required]
       });
+
     } else {
       this.isForgetPassword = true;
       this.forgotPasswordForm = this.fb.group({
@@ -50,14 +61,14 @@ export class ForgotPasswordComponent implements OnInit {
   resetPassword() {
     this.auth.resetPassword(this.forgotPasswordForm.value)
       .subscribe((data) => {
-        this.toaster.success('Success', data['msg'], {
+        this.toaster.success(data['msg'], 'Success', {
           timeOut: 3000,
           positionClass: "toast-top-right"
         });
         this.router.navigate(['/login']);
       },
       (errorObj) => {
-        this.toaster.error('Error', errorObj.error.err, {
+        this.toaster.error( errorObj.error.err, 'Error', {
           timeOut: 3000,
           positionClass: "toast-top-center"
         })
@@ -65,16 +76,16 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   changePassword() {
-    this.auth.changePassword(this.changePasswordForm.value, this.playerId)
+    this.auth.changePassword(this.changePasswordForm.value)
       .subscribe((response) => {
-        this.toaster.success('Success', response.msg, {
+        this.toaster.success(response.msg, 'Success', {
           timeOut: 3000,
           positionClass: "toast-top-right"
         });
         this.router.navigate(['/login']);
       },
       (errorObj) => {
-        this.toaster.error('Error', errorObj.error.err, {
+        this.toaster.error(errorObj.error.err, 'Error', {
           timeOut: 3000,
           positionClass: "toast-top-center"
         })

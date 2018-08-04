@@ -11,6 +11,8 @@ import { EventService } from '../services/eventEmitter.service';
 })
 export class DashboardComponent implements OnInit {
   games: any;
+  public isCollapsed: boolean = false;
+
   constructor(
     private authService: AuthService,
     private toaster: ToastrService,

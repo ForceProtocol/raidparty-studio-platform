@@ -9,22 +9,23 @@ import { EventService } from '../services/eventEmitter.service';
 })
 
 export class SideNavbarComponent implements OnInit {
-  platFormType: string;
+  campaignFilter: string;
   activeRoute: string;
+
   constructor(
-    private _messageService: EventService,
+    private messageService: EventService,
     private location: Location) 
   {
-      this.platFormType = 'android';
   }
 
   ngOnInit() {
-      this.platFormType = 'android';
+      this.campaignFilter = 'active';
+      this.messageService.setCampaignFilter(this.campaignFilter);
   }
 
-  clickFilter(value): void {
-    this.platFormType = value;
-    this._messageService.filter(value);
+  setCampaignFilter(value): void {
+    this.campaignFilter = value;
+    this.messageService.setCampaignFilter(value);
   }
 
   isActive(state) {

@@ -7,6 +7,7 @@ import { SignupComponent } from '../auth/signup/signup.component';
 import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
+import { WalletComponent } from '../wallet/wallet.component';
 import { StartCampaignComponent } from '../start-campaign/start-campaign.component';
 import { SideNavbarComponent } from '../side-navbar/side-navbar.component';
 import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
@@ -16,13 +17,15 @@ import { AuthService } from '../services/auth.service';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'activate-player', component: ActivateAccountComponent },
+  { path: 'activate-account', component: ActivateAccountComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'change-password', component: ForgotPasswordComponent },
+  { path: 'activate', component: ForgotPasswordComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthService] },
   { path: 'campaigns', component: CampaignsComponent, canActivate: [AuthService] },
+  { path: 'wallet', component: WalletComponent, canActivate: [AuthService] },
   { path: 'start-campaign/:gameId', component: StartCampaignComponent, canActivate: [AuthService] },
+  { path: 'start-campaign/:gameId/:gameAdAssetId', component: StartCampaignComponent, canActivate: [AuthService] },
   { path: '**', component: LoginComponent }
 ];
 

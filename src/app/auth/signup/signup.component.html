@@ -5,26 +5,20 @@
         <div class="form-bg mt-5  ">
           <div class="pt-5 pb-5">
             <a href="">
-              <img src="/assets/images/logo.png">
+              <img src="/assets/images/raidparty-logo.png">
             </a>
           </div>
           <form [formGroup]="signupForm">
+            <div class="alert alert-info">
+              <p>This platform is currently in demo only mode. None of your campaigns will appear in live production games, nor will your
+              advertising budget be used.</p>
+            </div>
+            <br />
+            
             <div class="form-heading mb-4">
               <h3> Create your account </h3>
             </div>
             <div class="custom-form">
-              <div class="form-group">
-                <input type="text" name="" class="form-control" placeholder="First name" formControlName="firstName">
-                <small [hidden]="signupForm.controls.firstName.valid || signupForm.controls.firstName.pristine" class="text-danger">
-                  First Name is required
-                </small>
-              </div>
-              <div class="form-group">
-                <input type="text" name="" class="form-control" placeholder="Last name" formControlName="lastName">
-                <small [hidden]="signupForm.controls.lastName.valid || signupForm.controls.lastName.pristine" class="text-danger">
-                  Last name is required
-                </small>
-              </div>
               <div class="form-group">
                 <input type="email" name="" class="form-control" placeholder="Email address" formControlName="email">
                 <small [hidden]="signupForm.controls.email.valid || signupForm.controls.email.pristine" class="text-danger">

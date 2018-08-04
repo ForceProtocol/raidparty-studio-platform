@@ -10479,6 +10479,12 @@ footer {
 }
  
 
+.force-symbol-small {
+	width: 18px;
+	margin-bottom: 4px;
+}
+
+
 /** NGX-SMART-MODAL */
 body.dialog-open {
   overflow: hidden; }

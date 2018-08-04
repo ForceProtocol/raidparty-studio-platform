@@ -1,41 +1,21 @@
 
-         <!-- Main Sidebar Container -->
-         <aside class="main-sidebar sidebar-dark-primary" *ngIf="isActive('games')">
-            <!-- Brand Logo -->
-            <!-- Sidebar -->
-            <div class="sidebar">
-               <!-- Sidebar Menu -->
-               <nav class="mt-2">
-                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                     <li class="nav-header"> PLATFORMS </li>
-                     <li class="nav-item">
-                        <a (click)="clickFilter('pc')" [ngClass]="{'active': platFormType==='pc'}" class="nav-link ">
-                           <img class="sidebar-menu-icon" src="/assets/images/pc-game-icon.png">
-                           <p>
-                              PC
-                           </p>
-                        </a>
-                     </li>
-                     <li class="nav-item">
-                        <a (click)="clickFilter('android')" [ngClass]="{'active': platFormType==='android'}" class="nav-link ">
-                           <img class="sidebar-menu-icon" src="/assets/images/android.svg">
-                           <p>
-                              Android
-                           </p>
-                        </a>
-                     </li>
-                     <li class="nav-item">
-                        <a (click)="clickFilter('ios')" [ngClass]="{'active': platFormType==='ios'}" class="nav-link ">
-                           <img class="sidebar-menu-icon" src="/assets/images/apple.svg">
-                           <p>
-                              Ios
-                           </p>
-                        </a>
-                     </li>
-                  </ul>
-               </nav>
-               <!-- /.sidebar-menu -->
-            </div>
-            <!-- /.sidebar -->
-         </aside>
-         
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary">
+   <div class="sidebar">
+
+      <nav class="mt-2" *ngIf="isActive('campaigns')">
+         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-header">OPTIONS</li>
+            <li class="nav-item">
+               <a (click)="setCampaignFilter('active')" [ngClass]="{'active': campaignFilter === 'active'}" class="nav-link ">
+                  <p><i class="fa fa-check"></i>&nbsp; Scheduled Campaigns</p>
+               </a>
+               <a (click)="setCampaignFilter('archived')" [ngClass]="{'active': campaignFilter === 'archived'}" class="nav-link ">
+                  <p><i class="fa fa-archive"></i>&nbsp; Archived Campaigns</p>
+               </a>
+            </li>
+         </ul>
+      </nav>
+
+   </div>
+</aside>

@@ -32,36 +32,41 @@
                 <h3>{{game.title}}</h3>
                 <div class="game-description" [innerHTML]="game.description">
                 </div>
-              </li>
-              <li class="list-group-item popover-hover">
-                <button type="button" class="popover-btn" data-toggle="collapse" [attr.data-target]="'#' + game.game_id">
-                  <b>Demographics &amp; Stats</b>
+                <button type="button" data-toggle="collapse" class="btn btn-outline-primary center" [attr.data-target]="'#' + game.gameId">
+                  Show Demographics
                 </button>
-                <div id={{game.game_id}} class="collapse">
+              </li>
+              <li id={{game.gameId}} class="collapse list-group-item popover-hover">
 
                   <ul class="p-0 mt-2 ">
                     <li class="list-group-item popover-hover mt-2">
-                      <ng-template #popContent>
-                        <table class="table table-hover">
-                          <thead>
-                            <tr>
-                              <th>Age Range:</th>
-                              <th>23 - 40</th>
-                            </tr>
-                            <tr>
-                              <th>Gender</th>
-                              <th>82% Male | 18% Female</th>
-                            </tr>
-                            <tr>
-                              <th>Location</th>
-                              <th>Spain, Latin America</th>
-                            </tr>
-                          </thead>
-                        </table>
-                      </ng-template>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>DAU:</th>
+                            <th>{{game.dailyActiveUsers}}</th>
+                          </tr>
+                          <tr>
+                            <th>MAU:</th>
+                            <th>{{game.monthlyActiveUsers}}</th>
+                          </tr>
+                          <tr>
+                            <th>Age Range:</th>
+                            <th>{{game.age}}</th>
+                          </tr>
+                          <tr>
+                            <th>Gender</th>
+                            <th>{{game.gender}}</th>
+                          </tr>
+                          <tr>
+                            <th>Location</th>
+                            <th>{{game.regions}}</th>
+                          </tr>
+                        </thead>
+                      </table>
                     </li>
                   </ul>
-                </div>
+
               </li>
               <div>
                 <div class="btn-group w-100">

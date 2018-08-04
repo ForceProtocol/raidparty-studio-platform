@@ -7,7 +7,8 @@
         <div class="row mb-2">
 
           <div class="col-sm-6">
-            <h4 class="m-0 text-dark">Start Campaign for {{game.title}}</h4>
+            <h4 *ngIf="newCampaign" class="m-0 text-dark">Start Campaign for {{game.title}}</h4>
+            <h4 *ngIf="!newCampaign" class="m-0 text-dark">Edit Campaign for {{game.title}}</h4>
           </div>
 
         </div>
@@ -222,6 +223,10 @@
                       <table class="table table-hover">
                         <tbody>
                           <tr>
+                            <th><i ngbTooltip="Average Exposure is how many seconds your advert will be viewed by a single player, in a single game session." class="fa fa-question-circle"></i> Avg. Exposure:</th>
+                            <td>{{selectedGameAvgExposure + ' seconds / ' + selectedGameAvgSession + ' seconds ('}} {{ selectedGameExposurePercent | number : '1.0-2'}} &#37;)</td>
+                          </tr>
+                          <tr>
                             <th>Width:</th>
                             <td [innerHTML]="selectedGameAssetWidth"></td>
                           </tr>
@@ -230,8 +235,9 @@
                             <td [innerHTML]="selectedGameAssetHeight"></td>
                           </tr>
                           <tr>
-                            <th>Sample:</th>
-                            <td><a *ngIf="selectedGameAssetSample" class="btn btn-sm btn-success" [href]="selectedGameAssetSample">Download Template</a></td>
+                            <th>Template:</th>
+                            <td><div *ngIf="selectedGameAssetSample"><a class="btn btn-sm btn-success" [href]="selectedGameAssetSample">Download Template</a><br />
+                              <small>(Send this template to your design team)</small></div></td>
                           </tr>
                         </tbody>
                       </table>

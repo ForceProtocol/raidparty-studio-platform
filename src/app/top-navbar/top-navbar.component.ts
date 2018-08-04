@@ -19,6 +19,8 @@ export class TopNavbarComponent implements OnInit {
   closeResult: string;
   currentPassword: string;
   newPassword: string;
+  newPasswordRepeat: string;
+
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -88,15 +90,40 @@ export class TopNavbarComponent implements OnInit {
   }
 
   private updatePassword() {
+
     if (!this.currentPassword || !this.newPassword) {
+      this.currentPassword = "";
+      this.newPassword = "";
+      this.newPasswordRepeat = "";
+
       this.toaster.error('Error', 'Please provide all inputs', {
         timeOut: 3000,
         positionClass: 'toast-top-center'
       });
       return;
     }
+
+    if(this.newPassword != this.newPasswordRepeat){
+      
+      this.currentPassword = "";
+      this.newPassword = "";
+      this.newPasswordRepeat = "";
+
+      this.toaster.error('Error', 'Your new passwords do not match', {
+        timeOut: 3000,
+        positionClass: 'toast-top-center'
+      });
+      return;
+    }
+
+
     this.auth.updatePassword(this.currentPassword, this.newPassword)
       .subscribe(data => {
+
+        this.currentPassword = "";
+        this.newPassword = "";
+        this.newPasswordRepeat = "";
+
         if (data['success']) {
           this.toaster.success(data['msg'], 'Success', {
             timeOut: 3000,
