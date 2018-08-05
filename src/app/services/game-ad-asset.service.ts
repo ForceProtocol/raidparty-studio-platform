@@ -30,11 +30,29 @@ export class GameAdAssetService {
   }
 
 
+  updateCampaign(gameAdAssetId,params){
+    let campaignData = this.http.post(`${environment.API_HOST}/web/advertiser/update-campaign/${gameAdAssetId}?token=${this.token}`,params)
+    .map(response => response);
+    return campaignData;
+  }
+
+
+  /**
+  * Get all game ad assets (advertisers campaigns)
+  */
   getGameAdCampaigns(active,archived){
     return this.http.get(`${environment.API_HOST}/web/advertiser/campaigns?token=${this.token}&active=${active}&archived=${archived}`)
     .map(response => response);
   }
 
+
+  /**
+  * Get an individual game ad asset (advertisers campaign)
+  */
+  getGameAdAsset(gameAdAssetId){
+    return this.http.get(`${environment.API_HOST}/web/advertiser/campaign/${gameAdAssetId}?token=${this.token}`)
+    .map(response => response);
+  }
 
   deleteCampaign(campaignId){
     return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/delete?token=${this.token}`,{campaignId: campaignId})
@@ -48,6 +66,11 @@ export class GameAdAssetService {
 
   activateCampaign(gameAdAssetId,activeState){
     return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/activate?token=${this.token}`,{gameAdAssetId: gameAdAssetId, active:activeState})
+    .map(response => response);
+  }
+
+  deleteFile(campaignId,fileKey){
+    return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/file/delete?token=${this.token}`,{campaignId: campaignId,fileKey:fileKey})
     .map(response => response);
   }
 

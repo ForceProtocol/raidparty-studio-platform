@@ -27,9 +27,11 @@
           <div class="mt-2">
             <form [formGroup]="campaignForm">
 
+              <input *ngIf="campaignForm.get('gameAdAssetId')" type="hidden" [value]="gameAdAsset.id" formControlName="gameAdAssetId" />
+
                 <div class="row">
 
-                  <div class="col-5 col-lg-5 col-md-5">
+                  <div class="col-6 col-lg-6 col-md-6">
                     <fieldset class="form-group">
                       <legend class="pt-0">In-Game Asset</legend>
                       <div class="form-group">
@@ -38,7 +40,7 @@
                           <br />You must select a game asset to assign your advert to.
                         </small>
                         <select (change)="selectGameAsset($event.target.value)" class="form-control" formControlName="gameAsset">
-                          <option *ngFor="let gameAsset of gameAssets" [value]="gameAsset.id">
+                          <option *ngFor="let gameAsset of gameAssets" [value]="gameAsset.id" [selected]="gameAdAsset && gameAsset.id === gameAdAsset.gameAsset.id">
                               {{gameAsset.title}}
                           </option>
                         </select>
@@ -57,6 +59,18 @@
                         <input type="file" class="form-control-file" (change)="setFileUploadAdditionalParameters(videoUploader,'resourceUrlHd', 'video')" ng2FileSelect [uploader]="videoUploader" formControlName="resourceVideoHd">
 
                         <input type="hidden" formControlName="resourceUrlHd" [value]="resourceUrlHd" />
+
+                        <div *ngIf="resourceUrlHd">
+                          <br />
+                          <table class="table table-hover">
+                            <tr>
+                              <td>Saved file</td>
+                              <td><a target="resourceUrlHd" [attr.href]="API_HOST + resourceUrlHd" class="btn btn-sm">Preview</a></td>
+                              <td><button *ngIf="gameAdAsset && gameAdAsset.id" (click)="removeSavedFile(deleteFile,'resourceUrlHd')" class="btn btn-sm btn-danger">Remove</button></td>
+                            </tr>
+                          </table>
+                        </div>
+
                       </div>
 
 
@@ -69,18 +83,42 @@
                         <input type="file" class="form-control-file" (change)="setFileUploadAdditionalParameters(videoUploader,'resourceUrlSd', 'video')" ng2FileSelect [uploader]="videoUploader" formControlName="resourceVideoSd">
 
                         <input type="hidden" formControlName="resourceUrlSd" [value]="resourceUrlSd" />
+
+                        <div *ngIf="resourceUrlSd">
+                          <br />
+                          <table class="table table-hover">
+                            <tr>
+                              <td>Saved file</td>
+                              <td><a target="resourceUrlSd" [attr.href]="API_HOST + resourceUrlSd" class="btn btn-sm">Preview</a></td>
+                              <td><button *ngIf="gameAdAsset && gameAdAsset.id" (click)="removeSavedFile(deleteFile,'resourceUrlSd')" class="btn btn-sm btn-danger">Remove</button></td>
+                            </tr>
+                          </table>
+                        </div>
+
                       </div>
 
 
                       <div *ngIf="selectedGameAssetType == 'texture'" class="form-group">
                         <label>Game Object Texture</label>
-                        <small [hidden]="campaignForm.controls.resourceImg.valid" class="text-danger">
+                        <small [hidden]="campaignForm.controls.resourceUrlImg.valid" class="text-danger">
                           <br />Failed to upload the file
                         </small>
 
-                        <input type="file" class="form-control-file" (change)="setFileUploadAdditionalParameters(imageUploader,'resourceImg', 'image')" ng2FileSelect [uploader]="imageUploader" formControlName="resourceImgFile">
+                        <input type="file" class="form-control-file" (change)="setFileUploadAdditionalParameters(imageUploader,'resourceUrlImg', 'image')" ng2FileSelect [uploader]="imageUploader" formControlName="resourceImgFile">
 
-                        <input type="hidden" formControlName="resourceImg" [value]="resourceImg" />
+                        <input type="hidden" formControlName="resourceUrlImg" [value]="resourceUrlImg" />
+
+                        <div *ngIf="resourceUrlImg">
+                          <br />
+                          <table class="table table-hover">
+                            <tr>
+                              <td>Saved file</td>
+                              <td><a target="resourceUrlImg" [attr.href]="API_HOST + resourceUrlImg" class="btn btn-sm">Preview</a></td>
+                              <td><button *ngIf="gameAdAsset && gameAdAsset.id" (click)="removeSavedFile(deleteFile,'resourceUrlImg')" class="btn btn-sm btn-danger">Remove</button></td>
+                            </tr>
+                          </table>
+                        </div>
+
                       </div>
 
 
@@ -150,10 +188,10 @@
                     <fieldset *ngIf="selectedGameAssetType == 'screen' && selectedGameAssetType" class="form-group">
                       <legend class="pt-0">Video Dimensions</legend>
                       <div class="form-group">
-                        <input [(ngModel)]="selectedGameAssetWidth" value={{selectedGameAssetWidth}} type="text" class="form-control" placeholder="Width in px" formControlName="width">
+                        <input [(ngModel)]="width" type="text" class="form-control" placeholder="Width in px" formControlName="width">
                       </div>
                       <div class="form-group">
-                        <input [(ngModel)]="selectedGameAssetHeight" value={{selectedGameAssetHeight}} type="text" class="form-control" placeholder="Height in px" formControlName="height">
+                        <input [(ngModel)]="height" type="text" class="form-control" placeholder="Height in px" formControlName="height">
                       </div>
                     </fieldset>
 
@@ -197,21 +235,24 @@
                       <p><small>Your campaign will only run based on your bid compared with other bids using our system algorithm</small></p>
 
                       <label>Start Date</label>
-                      <div NgTempusdominusBootstrapInput name="startDate" [(ngModel)]="startDate" formControlName="startDate" [options]="datePickerOptions"></div>
+                      <div NgTempusdominusBootstrapInput name="startDate" [(ngModel)]="startDate" formControlName="startDate" [options]="startDatePickerOptions"></div>
 
                       <br />
 
                       <label>End Date</label>
-                      <div NgTempusdominusBootstrapInput name="endDate" [(ngModel)]="endDate" formControlName="endDate" [options]="datePickerOptions"></div>
+                      <div NgTempusdominusBootstrapInput name="endDate" [(ngModel)]="endDate" formControlName="endDate" [options]="endDatePickerOptions"></div>
                     </fieldset>
 
 
                     <div class="button">
-                      <button type="submit" [disabled]="!campaignForm.valid" class="btn signin-btn" (click)="createCampaign()" [ngClass]="{'btn-invalid' : campaignForm.invalid}">Create Campaign</button>
+                      <button *ngIf="!campaignForm.get('gameAdAssetId')" type="submit" [disabled]="!campaignForm.valid" class="btn signin-btn" (click)="createCampaign()" [ngClass]="{'btn-invalid' : campaignForm.invalid}">Create Campaign</button>
+
+                      <button *ngIf="campaignForm.get('gameAdAssetId')" type="submit" [disabled]="!campaignForm.valid" class="btn signin-btn" (click)="updateCampaign()" [ngClass]="{'btn-invalid' : campaignForm.invalid}">Update Campaign</button>
+
                     </div>
                   </div>
 
-                  <div class="col-6 col-md-6 offset-md-1">
+                  <div class="col-5 col-md-5 offset-md-1">
                     <div class="form-group">
                       <h4>Game Advert Placement</h4>
 
@@ -260,3 +301,30 @@
     </section>
 
   </div>
+
+
+
+  <ng-template #deleteFile let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('cancel')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="alert alert-danger">
+          <p>Are you sure you wish to permanently delete this file?</p>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <input [(ngModel)]="fileUploadKey" type="hidden">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('cancel')">Cancel</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('delete')">Yes, delete it!</button>
+      </div>
+    </ng-template>

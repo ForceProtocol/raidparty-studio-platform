@@ -70,6 +70,10 @@ export class CampaignsComponent implements OnInit {
             }
 
             this.gameAdAssets[key].status = this.helperService.capitalize(this.gameAdAssets[key].status);
+
+            if(this.gameAdAssets[key].archived){
+              this.gameAdAssets[key].status = "Archived";
+            }
           }
 
       }, errObj => {
