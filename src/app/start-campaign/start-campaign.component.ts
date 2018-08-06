@@ -110,6 +110,7 @@ export class StartCampaignComponent implements OnInit, OnDestroy {
       // Creating a new campaign
       else{
         // Load data on the particular game
+        this.newCampaign = true;
         this.loadGameData(this.gameId,false);
       }
     });

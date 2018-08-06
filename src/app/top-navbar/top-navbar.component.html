@@ -20,10 +20,15 @@
         <ul class="navbar-nav ml-auto">
 
           <li class="nav-item dropdown">
-            <a class="nav-link" [ngClass]="{'active': isActive('wallet')}" routerLink="/wallet">
+            <a class="nav-link" [ngClass]="{'active': isActive('balance')}" routerLink="/balance">
+              &#36;0.00&nbsp;
+              Balance
+              &nbsp;<i placement="bottom" ngbTooltip="This is a demo account and so this is not a real balance" class="fa fa-question-circle"></i>
+            </a>
+            <!--<a class="nav-link" [ngClass]="{'active': isActive('wallet')}" routerLink="/wallet">
               <img class="force-symbol-small" src="/assets/images/gold-logo-only-for-print-48x48.png" alt="FORCE" /> &nbsp;
               Token Wallet
-            </a>
+            </a>-->
           </li>
 
           <!-- Notifications Dropdown Menu -->
