@@ -30,7 +30,7 @@
 
               <li class="list-group-item game-title-li">
                 <h3>{{game.title}}</h3>
-                <div class="game-description" [innerHTML]="game.description">
+                <div class="game-description" [innerHTML]="game.dynamicAdsDescription">
                 </div>
                 <button type="button" data-toggle="collapse" class="btn btn-outline-primary center" [attr.data-target]="'#' + game.gameId">
                   Show Demographics
