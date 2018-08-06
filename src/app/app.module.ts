@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
+import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
@@ -33,7 +34,7 @@ import { ActivateAccountComponent } from './auth/activate-account/activate-accou
 import { NotificationsComponent } from './notifications/notifications.component';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { FileSelectDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { NgTempusdominusBootstrapModule } from 'ngx-tempusdominus-bootstrap';
 
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
@@ -42,6 +43,7 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 @NgModule({
   declarations: [
     AppComponent,
+    AuthComponent,
     LoginComponent,
     SignupComponent,
     ForgotPasswordComponent,
@@ -54,7 +56,6 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
     StartCampaignComponent,
     ActivateAccountComponent,
     NotificationsComponent,
-    FileSelectDirective
   ],
   imports: [
     BrowserModule,
@@ -66,7 +67,8 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
     ToastrModule.forRoot(),
     NgxSmartModalModule.forRoot(),
     FormsModule,
-    NgTempusdominusBootstrapModule
+    NgTempusdominusBootstrapModule,
+    FileUploadModule
   ],
   providers: [AuthService, UserService, GameService, GameAdAssetService, EventService, NotificationService, NgxSmartModalService, HelperService,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }],
