@@ -21,6 +21,12 @@ export class LoginComponent implements OnInit {
     private toaster: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute) {
+    
+    const user = localStorage.getItem('user');
+    if (user) {
+      router.navigate(['/dashboard']);
+    }
+
     const params = this.activatedRoute.snapshot.queryParams;
     this.createForm();
   }

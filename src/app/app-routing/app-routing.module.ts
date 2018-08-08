@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+import { HomeComponent } from '../public/home.component';
 import { LoginComponent } from '../auth/login/login.component';
 import { SignupComponent } from '../auth/signup/signup.component';
 import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password.component';
@@ -15,7 +16,7 @@ import { ActivateAccountComponent } from '../auth/activate-account/activate-acco
 import { AuthService } from '../services/auth.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'activate-account', component: ActivateAccountComponent },
   { path: 'signup', component: SignupComponent },

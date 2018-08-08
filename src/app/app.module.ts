@@ -23,6 +23,7 @@ import { NotificationService } from './services/notification.service';
 import { HelperService } from './services/helper.service';
 
 
+import { HomeComponent } from './public/home.component';
 import { FooterComponent } from './headers/footer/footer.component';
 import { SideNavbarComponent } from './side-navbar/side-navbar.component';
 import { TopNavbarComponent } from './top-navbar/top-navbar.component';
@@ -38,10 +39,11 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { NgTempusdominusBootstrapModule } from 'ngx-tempusdominus-bootstrap';
 
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
-
+import { ReCaptchaModule } from 'angular2-recaptcha';
 
 @NgModule({
   declarations: [
+    HomeComponent,
     AppComponent,
     AuthComponent,
     LoginComponent,
@@ -68,7 +70,8 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
     NgxSmartModalModule.forRoot(),
     FormsModule,
     NgTempusdominusBootstrapModule,
-    FileUploadModule
+    FileUploadModule,
+    ReCaptchaModule
   ],
   providers: [AuthService, UserService, GameService, GameAdAssetService, EventService, NotificationService, NgxSmartModalService, HelperService,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }],

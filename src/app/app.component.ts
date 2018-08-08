@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Title } from "@angular/platform-browser";
 import { AuthService } from './services/auth.service';
 import { HelperService } from './services/helper.service';
@@ -17,8 +18,9 @@ export class AppComponent implements OnInit {
   constructor(private auth: AuthService,
               private router: Router,
               private title: Title,
-              public helperService: HelperService
-			  ) {
+              public helperService: HelperService,
+              private location: Location
+        ) {
 
     this.router.events.subscribe((event)=>{
 
@@ -40,5 +42,12 @@ export class AppComponent implements OnInit {
 
   isLoggedIn() {
     return this.auth.isLoggedIn;
+  }
+
+
+  isActive(state) {
+    let cleanUrl = this.router.url.split('?')[0];
+    cleanUrl = cleanUrl.split('#')[0];
+    return state === cleanUrl.split('/')[1];
   }
 }

@@ -17,6 +17,11 @@ export class ActivateAccountComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
+    const user = localStorage.getItem('user');
+    if (user) {
+      router.navigate(['/dashboard']);
+    }
+    
     this.params = this.activatedRoute.snapshot.queryParams;
   }
 
@@ -25,7 +30,7 @@ export class ActivateAccountComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }
 
-    this.auth.activateUser(this.params.advertiserId, this.params.pin, this.params.email)
+    this.auth.activateUser(this.params.studioId, this.params.pin, this.params.email)
       .subscribe((data) => {
         this.toaster.success( data.msg, 'Success', {
           timeOut: 3000,

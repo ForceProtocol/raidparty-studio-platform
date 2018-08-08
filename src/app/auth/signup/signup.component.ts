@@ -18,19 +18,48 @@ export class SignupComponent implements OnInit {
     private auth: AuthService,
     private toaster: ToastrService,
     private router: Router) {
+
+    const user = localStorage.getItem('user');
+    if (user) {
+      router.navigate(['/dashboard']);
+    }
+
     this.createForm();
   }
 
   ngOnInit() {
   }
 
+
   createForm() {
     this.signupForm = this.fb.group({
+      companyName: ['', Validators.required],
+      firstName: [''],
+      lastName: [''],
+      telephone: [''],
       email: ['', Validators.pattern(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)],
       password: ['', Validators.required],
-      acceptTerms: [false, Validators.required]
-    });
+      passwordCheck: ['', Validators.required],
+      acceptTerms: [false, Validators.required],
+      captcha: ['',Validators.required]
+    },{validator: this.validatePasswords('password','passwordCheck')});
   }
+
+
+  validatePasswords(passwordKey: string, passwordCheckKey: string){
+    return (group: FormGroup): {[key: string]: any} => {
+      let password = group.controls[passwordKey],
+        passwordCheck = group.controls[passwordCheckKey];
+
+      if(password.value != passwordCheck.value){
+        this.signupForm.controls['passwordCheck'].setErrors({matchPassword: true});
+        return;
+      }
+
+      return null;
+    }
+  }
+
 
   signup() {
     // In case if user first check and then un-check the terms & condition
@@ -51,11 +80,16 @@ export class SignupComponent implements OnInit {
         this.router.navigate(['/login']);
       },
       (errorObj) => {
-        this.toaster.error('Error', errorObj.error.err, {
+        this.toaster.error(errorObj.error.err, 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
       });
+  }
+
+
+  handleCorrectCaptcha(captcha){
+    this.signupForm.controls['captcha'].setValue(captcha);
   }
 
 }

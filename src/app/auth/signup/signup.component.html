@@ -2,54 +2,94 @@
   <div class="container">
     <div class="row">
       <div class="col-11 col-md-8 m-auto">
-        <div class="form-bg mt-5  ">
-          <div class="pt-5 pb-5">
-            <a href="">
+        <div class="form-bg mt-5">
+          <div class="pt-5 pb-5 text-center">
+            <a class="text-center" router="/">
               <img src="/assets/images/raidparty-logo.png">
             </a>
           </div>
+
           <form [formGroup]="signupForm">
-            <div class="alert alert-info">
-              <p>This platform is currently in demo only mode. None of your campaigns will appear in live production games, nor will your
-              advertising budget be used.</p>
-            </div>
-            <br />
             
-            <div class="form-heading mb-4">
-              <h3> Create your account </h3>
+            <div class="form-heading mb-4 text-center">
+              <h3>Create your account</h3>
             </div>
-            <div class="custom-form">
-              <div class="form-group">
-                <input type="email" name="" class="form-control" placeholder="Email address" formControlName="email">
-                <small [hidden]="signupForm.controls.email.valid || signupForm.controls.email.pristine" class="text-danger">
-                  Valid Email is required
-                </small>
-              </div>
-              <div class="form-group">
-                <input type="password" name="" class="form-control" placeholder="Password" formControlName="password">
-                <small [hidden]="signupForm.controls.password.valid || signupForm.controls.password.pristine" class="text-danger">
-                  Password is required
-                </small>
-              </div>
-              <div>
-                <ul class="custom-checkbox">
-                  <li>
-                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1" formControlName="acceptTerms">
-                    <label for="styled-checkbox-1">Agree with the
-                      <a href="#">Terms &amp; Privacy</a>
-                    </label>
-                  </li>
-                </ul>
-              </div>
-              <div class="button">
-                <a class="btn signin-btn" (click)="signup()" [ngClass]="{'btn-invalid' : signupForm.invalid}">SIGN UP</a>
-              </div>
-              <div class="button pb-5 pt-4">
-                <a routerLink="/signin" class="btn btn-signup">SIGN IN</a>
-              </div>
+
+            <div class="alert alert-warning">
+              <p>Sign up today and we will work with global brands to bring you more revenue for your game.</p>
             </div>
+
+            <div class="row">
+
+              <div class="col-6 col-md-6">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+                </div>
+              </div>
+
+              <div class="col-6 col-md-6">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Studio Name" formControlName="companyName">
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Telephone" formControlName="telephone">
+            </div>
+
+            <div class="form-group">
+              <input required type="email" class="form-control" placeholder="Email address" formControlName="email">
+              <small [hidden]="signupForm.controls.email.valid || signupForm.controls.email.pristine" class="text-danger">
+                Valid Email is required
+              </small>
+            </div>
+
+            <div class="form-group">
+              <input required type="password" class="form-control" placeholder="Password" formControlName="password">
+              <small [hidden]="signupForm.controls.password.valid || signupForm.controls.password.pristine" class="text-danger">
+                Password is required
+              </small>
+            </div>
+
+            <div class="form-group">
+              <input required type="password" class="form-control" placeholder="Confirm Password" formControlName="passwordCheck">
+              <small [hidden]="!signupForm.controls.passwordCheck.errors?.matchPassword || signupForm.controls.passwordCheck.pristine" class="text-danger">
+                Passwords do not match
+              </small>
+            </div>
+
+            <div>
+              <ul class="custom-checkbox">
+                <li>
+                  <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1" formControlName="acceptTerms">
+                  <label for="styled-checkbox-1">Agree with the <a href="#">Terms &amp; Privacy</a></label>
+                </li>
+              </ul>
+            </div>
+
+            <re-captcha (captchaResponse)="handleCorrectCaptcha($event)" site_key="6LfCVFUUAAAAAH1IxJRQDIn_F2PQ5mmijN-LJIGA"></re-captcha>
+
+
+            <div class="button">
+              <button class="btn signin-btn" (click)="signup()" [disabled]="signupForm.invalid" [ngClass]="{'btn-invalid' : signupForm.invalid}">SIGN UP</button>
+            </div>
+
+
+            <div class="button pb-5 pt-4">
+              <a routerLink="/signin" class="btn btn-signup">SIGN IN</a>
+            </div>
+
           </form>
         </div>
       </div>
     </div>
   </div>
+
+          <br />
+          <br />

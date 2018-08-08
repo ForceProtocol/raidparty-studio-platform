@@ -39,14 +39,14 @@ export class AuthService implements CanActivate {
   }
 
   signup(params) {
-    return this.http.post(`${environment.API_HOST}/web/advertiser/signup`, params)
+    return this.http.post(`${environment.API_HOST}/studio/signup`, params)
       .map((response) => {
         return response;
       });
   }
 
   login(params) {
-    return this.http.post(`${environment.API_HOST}/web/advertiser/login`, params)
+    return this.http.post(`${environment.API_HOST}/studio/login`, params)
       .map((response) => {
         if (response['success']) {
           this.isLoggedIn = true;
@@ -56,19 +56,26 @@ export class AuthService implements CanActivate {
       });
   }
 
+  contact(params) {
+    return this.http.post(`${environment.API_HOST}/studio/contact`, params)
+      .map((response) => {
+        return response;
+      });
+  }
+
   resetPassword(params) {
-    return this.http.post(`${environment.API_HOST}/web/advertiser/reset-password`, params);
+    return this.http.post(`${environment.API_HOST}/studio/reset-password`, params);
   }
 
   changePassword(params) {
-    return this.http.post(`${environment.API_HOST}/web/advertiser/change-password`, params)
+    return this.http.post(`${environment.API_HOST}/studio/change-password`, params)
       .map((response: any) => {
         return response;
       });
   }
 
   activateUser(userId, pin, email) {
-    return this.http.post(`${environment.API_HOST}/web/advertiser/activate`, { userId:userId, pin:pin, email:email })
+    return this.http.post(`${environment.API_HOST}/studio/activate`, { userId:userId, pin:pin, email:email })
       .map((response: any) => {
         return response;
       });
@@ -89,7 +96,7 @@ export class AuthService implements CanActivate {
   }
 
   updatePassword(currentPassword, newPassword) {
-    return this.http.post(`${environment.API_HOST}/web/advertiser/update-password?token=${this.getToken()}`,
+    return this.http.post(`${environment.API_HOST}/studio/update-password?token=${this.getToken()}`,
      { 'current_password': currentPassword, 'new_password': newPassword })
       .map((response: any) => {
         return response;

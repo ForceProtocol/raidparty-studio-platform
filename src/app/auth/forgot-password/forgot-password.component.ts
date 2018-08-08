@@ -25,6 +25,11 @@ export class ForgotPasswordComponent implements OnInit {
               private router: Router,
               private toaster: ToastrService,
               private activatedRoute: ActivatedRoute) {
+    const user = localStorage.getItem('user');
+    if (user) {
+      router.navigate(['/dashboard']);
+    }
+    
     this.createForm();
   }
 
