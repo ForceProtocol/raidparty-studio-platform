@@ -32,4 +32,10 @@ export class UserService {
   }
 
 
+  getGames(){
+    return this.http.get(`${environment.API_HOST}/studio/games?token=${this.token}`)
+    .map(response => response);
+  }
+
+
 }

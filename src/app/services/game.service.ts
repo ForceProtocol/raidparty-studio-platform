@@ -42,4 +42,19 @@ export class GameService {
     return gameData;
   }
 
+
+  addGame(params) {
+    return this.http.post(`${environment.API_HOST}/studio/game?token=${this.token}`, params)
+      .map((response) => {
+        return response;
+      });
+  }
+
+  updateGame(params,gameId) {
+    return this.http.post(`${environment.API_HOST}/studio/game/${gameId}`, params)
+      .map((response) => {
+        return response;
+      });
+  }
+
 }

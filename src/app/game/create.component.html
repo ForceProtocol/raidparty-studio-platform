@@ -1,0 +1,262 @@
+<div class="content-wrapper">
+
+    <div class="content-header">
+
+      <div class="container-fluid">
+
+        <div class="row mb-2">
+
+          <div class="col-sm-6">
+            <h4 *ngIf="updatingGame" class="m-0 text-dark">Editing Game: {{game.title}}</h4>
+          </div>
+
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+
+    <section class="content">
+
+      <div class="container-fluid">
+
+        <div class="col-10 col-md-10">
+          <div class="mt-2">
+
+            <div class="alert alert-success">
+              <p>Once you complete the form below, our team will receive a notification to start work on your game.</p>
+            </div>
+
+
+            <form [formGroup]="createGameForm">
+
+              <input *ngIf="createGameForm.get('gameAdAssetId')" type="hidden" [value]="gameAdAsset.id" formControlName="gameAdAssetId" />
+
+              <div class="row">
+
+                <div class="col-6 col-lg-6 col-md-6">
+                  <p>* Required Fields</p>
+
+                  <fieldset class="form-group">
+                    <legend class="pt-0">General Details</legend>
+                    <p>Provide some general information about your game</p>
+
+                    <div class="form-group">
+                      <label>Game Title *</label>
+                      <input required type="text" class="form-control" placeholder="e.g. Battlefield 2" formControlName="title">
+                      <small [hidden]="createGameForm.controls.title.valid || createGameForm.controls.title.pristine" class="text-danger">
+                        Game title is required
+                      </small>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label>Description *</label>
+                      <p><small>Give a brief description about your game. Is it a FPS, MOBA, or platformer for example? Try to make it sound as exciting as possible.</small></p>
+                      <textarea required rows="5" class="form-control" formControlName="description"></textarea>
+                      <small [hidden]="createGameForm.controls.description.valid || createGameForm.controls.description.pristine" class="text-danger">
+                        A description is required
+                      </small>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label>Game Screenshot *</label>
+                      <p><small>Upload a cover image of your game.<br />No larger than 1500px X 1500px, .png, .jpeg, .jpg, .gif file formats accepted.</small></p>
+                      <input required type="file" class="form-control-file" (change)="setPreviewImage($event)" (change)="setFileUploadAdditionalParameters(imageUploader,'avatar', 'image')" ng2FileSelect [uploader]="imageUploader" formControlName="avatarFile">
+
+                      <small [hidden]="createGameForm.controls.avatarFile.valid || createGameForm.controls.avatarFile.pristine" class="text-danger">
+                        A game screenshot is required
+                      </small>
+
+                      <input type="hidden" formControlName="avatar" [value]="avatar" />
+
+
+                      <table class="table table-hover">
+                          <tbody>
+                            <tr *ngFor="let item of imageUploader.queue">
+                                <td><strong>{{ item?.file?.name }}</strong></td>
+                                <td *ngIf="imageUploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                                <td *ngIf="imageUploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-success btn-sm"
+                                            (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                            (click)="item.cancel()" [disabled]="!item.isUploading">
+                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                          </tbody>
+                      </table>
+
+                    </div>
+
+                  </fieldset>
+
+
+                  <fieldset class="form-group">
+                    <legend class="pt-0">Platforms *</legend>
+
+                    <div class="form-group">
+                      <label>What platforms is your game built for?</label>
+
+                      <div class="form-check">
+                        <input id="pc" class="form-check-input" type="checkbox" formControlName="pc" [(ngModel)]="pcChecked" />
+                        <label for="pc" class="form-check-label">PC</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input id="mac" class="form-check-input" type="checkbox" formControlName="mac" [(ngModel)]="macChecked" />
+                        <label for="mac" class="form-check-label">MAC</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input id="console" class="form-check-input" type="checkbox" formControlName="console"  [(ngModel)]="consoleChecked" />
+                        <label for="console" class="form-check-label">Consoles</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input id="android" class="form-check-input" type="checkbox" formControlName="android"  [(ngModel)]="androidChecked" />
+                        <label for="android" class="form-check-label">Android</label>
+                      </div>
+
+                      <div class="form-check">
+                        <input id="ios" class="form-check-input" type="checkbox" formControlName="ios" [(ngModel)]="iosChecked" />
+                        <label for="ios" class="form-check-label">iOS</label>
+                      </div>
+
+                    </div>
+
+
+                    <div *ngIf="pcChecked || macChecked || consoleChecked || androidChecked || iosChecked" class="form-group">
+                      <label>Download Links</label>
+                      <p>If your game is available to download please enter the download links below:</p>
+                    </div>
+
+                    <div *ngIf="pcChecked" class="form-group">
+                      <label>PC Download Link:</label>
+                      <input required type="text" class="form-control" placeholder="E.g. https://store.steampowered.com/app/505740/Eximius_Seize_the_Frontline/" formControlName="pcLink">
+                    </div>
+
+                     <div *ngIf="macChecked" class="form-group">
+                      <label>MAC Download Link:</label>
+                      <input required type="text" class="form-control" placeholder="E.g. https://store.steampowered.com/app/505740/Eximius_Seize_the_Frontline/" formControlName="macLink">
+                    </div>
+
+                    <div *ngIf="consoleChecked" class="form-group">
+                      <label>Console Download Link:</label>
+                      <input required type="text" class="form-control" placeholder="E.g. https://www.playstation.com/en-us/games/fortnite-ps4/" formControlName="consoleLink">
+                    </div>
+
+                    <div *ngIf="androidChecked" class="form-group">
+                      <label>Android Download Link:</label>
+                      <input required type="text" class="form-control" placeholder="E.g. https://play.google.com/store/apps/details?id=com.app.Raidparty" formControlName="androidLink">
+                    </div>
+
+                    <div *ngIf="iosChecked" class="form-group">
+                      <label>iOS Download Link:</label>
+                      <input required type="text" class="form-control" placeholder="E.g. https://www.apple.com/uk/ios/app-store/" formControlName="iosLink">
+                    </div>
+
+                  </fieldset>
+
+
+                  <fieldset class="form-group">
+                    <legend class="pt-0">Analytics</legend>
+                    <p>Provide the most accurate information about your game possible.</p>
+
+                    <div class="form-group">
+                      <label>Regions *</label>
+                      <p><small>What countries is your game launched in?</small></p>
+                      <input required type="text" class="form-control" placeholder="E.g. America, England, India" formControlName="regions">
+                      <small [hidden]="createGameForm.controls.regions.valid || createGameForm.controls.regions.pristine" class="text-danger">
+                        Regions is required
+                      </small>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Monthly Active Users *</label>
+                      <p><small>How many active users have there been in the last month?</small></p>
+                      <input required type="number" class="form-control" placeholder="e.g. 5800" formControlName="mau">
+                      <small [hidden]="createGameForm.controls.mau.valid || createGameForm.controls.mau.pristine" class="text-danger">
+                        Monthly Active Users is required
+                      </small>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label>Typical Age Range</label>
+                      <p><small>What is the average age range of your players?</small></p>
+                      <input type="text" class="form-control" placeholder="e.g. 18-28" formControlName="age">
+                    </div>
+
+                    <div class="col-12">
+                      <div class="row">
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label>Male Players</label>
+                            <p><small>What percentage of your players are male?</small></p>
+                            <input type="number" class="form-control" placeholder="e.g. 60" formControlName="male">
+                          </div>
+                        </div>
+
+                        <div class="col-6">
+                          <div class="form-group">
+                            <label>Female Players</label>
+                            <p><small>What percentage of your players are female?</small></p>
+                            <input type="number" class="form-control" placeholder="e.g. 60" formControlName="female">
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </fieldset>
+
+
+                  <div class="button">
+                    <button *ngIf="!updatingGame" type="submit" [disabled]="!createGameForm.valid" class="btn signin-btn" (click)="createGame()" [ngClass]="{'btn-invalid' : createGameForm.invalid}">Save Game Details</button>
+
+                    <button *ngIf="updatingGame" type="submit" [disabled]="!createGameForm.valid" class="btn signin-btn" (click)="updateGame()" [ngClass]="{'btn-invalid' : createGameForm.invalid}">Update Game Details</button>
+                  </div>
+                </div>
+
+
+                <div class="col-5 offset-1">
+                  <h4>Game screenshot preview</h4>
+                  <img *ngIf="!displayAvatar" class="img img-fluid" src="/assets/images/blank-screen.png" />
+                  <img *ngIf="displayAvatar" class="img img-fluid" [src]="previewUrl" />
+                </div>
+
+
+              </div>
+            </form>
+
+            <br />
+            <br />
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>

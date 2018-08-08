@@ -36,7 +36,14 @@ export class TopNavbarComponent implements OnInit {
   }
 
   isActive(state) {
-	return state === this.location.path().split('/')[1];
+    let cleanUrl = this.router.url.split('?')[0];
+    cleanUrl = cleanUrl.split('#')[0];
+
+    if(state === cleanUrl){
+      return true;
+    }
+
+    return state === cleanUrl.split('/')[1];
   }
 
   logout() {
@@ -61,7 +68,7 @@ export class TopNavbarComponent implements OnInit {
           });
         }
       }, errObj => {
-        this.toaster.error('Error', errObj.error.err, {
+        this.toaster.error(errObj.error.err, 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
@@ -96,7 +103,7 @@ export class TopNavbarComponent implements OnInit {
       this.newPassword = "";
       this.newPasswordRepeat = "";
 
-      this.toaster.error('Error', 'Please provide all inputs', {
+      this.toaster.error('Please provide all inputs','Error',{
         timeOut: 3000,
         positionClass: 'toast-top-center'
       });
@@ -109,7 +116,7 @@ export class TopNavbarComponent implements OnInit {
       this.newPassword = "";
       this.newPasswordRepeat = "";
 
-      this.toaster.error('Error', 'Your new passwords do not match', {
+      this.toaster.error('Your new passwords do not match', 'Error',{
         timeOut: 3000,
         positionClass: 'toast-top-center'
       });
@@ -131,7 +138,7 @@ export class TopNavbarComponent implements OnInit {
           });
         }
       }, errObj => {
-        this.toaster.error('Error', errObj.error.err, {
+        this.toaster.error(errObj.error.err,'Error',{
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });

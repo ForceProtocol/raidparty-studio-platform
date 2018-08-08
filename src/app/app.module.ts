@@ -21,6 +21,7 @@ import { GameAdAssetService } from './services/game-ad-asset.service';
 import { EventService } from './services/eventEmitter.service';
 import { NotificationService } from './services/notification.service';
 import { HelperService } from './services/helper.service';
+import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 
 
 import { HomeComponent } from './public/home.component';
@@ -30,7 +31,7 @@ import { TopNavbarComponent } from './top-navbar/top-navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { WalletComponent } from './wallet/wallet.component';
-import { StartCampaignComponent } from './start-campaign/start-campaign.component';
+import { CreateGameComponent } from './game/create.component';
 import { ActivateAccountComponent } from './auth/activate-account/activate-account.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { FormsModule } from '@angular/forms';
@@ -55,7 +56,7 @@ import { ReCaptchaModule } from 'angular2-recaptcha';
     DashboardComponent,
     CampaignsComponent,
     WalletComponent,
-    StartCampaignComponent,
+    CreateGameComponent,
     ActivateAccountComponent,
     NotificationsComponent,
   ],
@@ -73,7 +74,7 @@ import { ReCaptchaModule } from 'angular2-recaptcha';
     FileUploadModule,
     ReCaptchaModule
   ],
-  providers: [AuthService, UserService, GameService, GameAdAssetService, EventService, NotificationService, NgxSmartModalService, HelperService,
+  providers: [AuthService, UserService, GameService, GameAdAssetService, EventService, NotificationService, NgxSmartModalService, HelperService,CanDeactivateGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

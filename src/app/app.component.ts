@@ -47,7 +47,12 @@ export class AppComponent implements OnInit {
 
   isActive(state) {
     let cleanUrl = this.router.url.split('?')[0];
-    cleanUrl = cleanUrl.split('#')[0];
+    cleanUrl = cleanUrl.split('#')[0]
+
+    if(state === cleanUrl){
+      return true;
+    }
+
     return state === cleanUrl.split('/')[1];
   }
 }

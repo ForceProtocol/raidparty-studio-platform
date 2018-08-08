@@ -97,7 +97,7 @@ export class AuthService implements CanActivate {
 
   updatePassword(currentPassword, newPassword) {
     return this.http.post(`${environment.API_HOST}/studio/update-password?token=${this.getToken()}`,
-     { 'current_password': currentPassword, 'new_password': newPassword })
+     { 'currentPassword': currentPassword, 'newPassword': newPassword })
       .map((response: any) => {
         return response;
       });
