@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'activate', component: ForgotPasswordComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthService] },
   { path: 'game/create', component: CreateGameComponent, canActivate: [AuthService], canDeactivate: [CanDeactivateGuard] },
+  { path: 'game/create/:gameId', component: CreateGameComponent, canActivate: [AuthService], canDeactivate: [CanDeactivateGuard] },
   { path: 'campaigns', component: CampaignsComponent, canActivate: [AuthService] },
   { path: 'wallet', component: WalletComponent, canActivate: [AuthService] },
   { path: '**', component: LoginComponent }

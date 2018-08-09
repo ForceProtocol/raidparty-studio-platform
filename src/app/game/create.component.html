@@ -45,7 +45,7 @@
 
                     <div class="form-group">
                       <label>Game Title *</label>
-                      <input required type="text" class="form-control" placeholder="e.g. Battlefield 2" formControlName="title">
+                      <input required type="text" class="form-control" placeholder="e.g. Battlefield 2" [(ngModel)]="game.title" formControlName="title">
                       <small [hidden]="createGameForm.controls.title.valid || createGameForm.controls.title.pristine" class="text-danger">
                         Game title is required
                       </small>
@@ -55,7 +55,7 @@
                     <div class="form-group">
                       <label>Description *</label>
                       <p><small>Give a brief description about your game. Is it a FPS, MOBA, or platformer for example? Try to make it sound as exciting as possible.</small></p>
-                      <textarea required rows="5" class="form-control" formControlName="description"></textarea>
+                      <textarea required rows="5" class="form-control" [(ngModel)]="game.dynamicAdsDescription" formControlName="description"></textarea>
                       <small [hidden]="createGameForm.controls.description.valid || createGameForm.controls.description.pristine" class="text-danger">
                         A description is required
                       </small>
@@ -71,7 +71,7 @@
                         A game screenshot is required
                       </small>
 
-                      <input type="hidden" formControlName="avatar" [value]="avatar" />
+                      <input type="hidden" formControlName="avatar" [value]="avatar" [(ngModel)]="game.avatar" />
 
 
                       <table class="table table-hover">
@@ -186,7 +186,7 @@
                     <div class="form-group">
                       <label>Regions *</label>
                       <p><small>What countries is your game launched in?</small></p>
-                      <input required type="text" class="form-control" placeholder="E.g. America, England, India" formControlName="regions">
+                      <input required type="text" class="form-control" placeholder="E.g. America, England, India" [(ngModel)]="game.regions" formControlName="regions">
                       <small [hidden]="createGameForm.controls.regions.valid || createGameForm.controls.regions.pristine" class="text-danger">
                         Regions is required
                       </small>
@@ -195,7 +195,7 @@
                     <div class="form-group">
                       <label>Monthly Active Users *</label>
                       <p><small>How many active users have there been in the last month?</small></p>
-                      <input required type="number" class="form-control" placeholder="e.g. 5800" formControlName="mau">
+                      <input required type="number" class="form-control" placeholder="e.g. 5800" [(ngModel)]="game.monthlyActiveUsers" formControlName="mau">
                       <small [hidden]="createGameForm.controls.mau.valid || createGameForm.controls.mau.pristine" class="text-danger">
                         Monthly Active Users is required
                       </small>
@@ -205,7 +205,7 @@
                     <div class="form-group">
                       <label>Typical Age Range</label>
                       <p><small>What is the average age range of your players?</small></p>
-                      <input type="text" class="form-control" placeholder="e.g. 18-28" formControlName="age">
+                      <input type="text" class="form-control" placeholder="e.g. 18-28" [(ngModel)]="game.age" formControlName="age">
                     </div>
 
                     <div class="col-12">
@@ -215,7 +215,7 @@
                           <div class="form-group">
                             <label>Male Players</label>
                             <p><small>What percentage of your players are male?</small></p>
-                            <input type="number" class="form-control" placeholder="e.g. 60" formControlName="male">
+                            <input type="number" class="form-control" placeholder="e.g. 60" [(ngModel)]="game.male" formControlName="male">
                           </div>
                         </div>
 
@@ -223,7 +223,7 @@
                           <div class="form-group">
                             <label>Female Players</label>
                             <p><small>What percentage of your players are female?</small></p>
-                            <input type="number" class="form-control" placeholder="e.g. 60" formControlName="female">
+                            <input type="number" class="form-control" placeholder="e.g. 60" [(ngModel)]="game.female" formControlName="female">
                           </div>
                         </div>
 

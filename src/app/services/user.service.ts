@@ -26,14 +26,19 @@ export class UserService {
   }
 
   getUser(){
-    let playerData = this.http.get(`${environment.API_HOST}/web/advertiser?token=${this.token}`)
+    return this.http.get(`${environment.API_HOST}/web/advertiser?token=${this.token}`)
     .map(response => response);
-    return playerData;
   }
 
 
   getGames(){
     return this.http.get(`${environment.API_HOST}/studio/games?token=${this.token}`)
+    .map(response => response);
+  }
+
+
+  getGame(gameId){
+    return this.http.get(`${environment.API_HOST}/studio/game/${gameId}?token=${this.token}`)
     .map(response => response);
   }
 

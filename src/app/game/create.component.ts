@@ -31,6 +31,7 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
   previewUrl: any;
   fileUploadKey: string;
   isLoadingImg: boolean = false;
+  sub: any;
 
   fileUploadUrl: string = environment.API_HOST + '/studio/game/upload/image';
   public resourceVideoHdName: string = "";
@@ -69,10 +70,22 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
 
     // Initialise form File Uploads
     this.initFileUploads();
+
+
+    // If this is a game being editied, we will get a game ID parameter
+    this.sub = this.route.params.subscribe(params => {
+      // This is editing a game ad asset
+      if(typeof params['gameId'] !== 'undefined'){
+        this.titleService.setTitle('Update Game');
+        this.loadGameData(params['gameId']);
+      }
+    });
+
   }
 
 
   ngOnDestroy(){
+    this.sub.unsubscribe();
   }
 
 
@@ -96,18 +109,11 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
   /**
   * Get latest data for the selected game from the server
   */
-  loadGameData(gameId,gameAdAssetId){
-    
-  }
-
-
-  /**
-  * Get latest data for the selected game from the server
-  */
-  loadGameAdAsset(gameAdAssetId){
-    this.gameAdAssetService.getGameAdAsset(gameAdAssetId)
+  loadGameData(gameId){
+    this.gameService.getGame(gameId)
       .subscribe((data) => {
-          this.updateForm();
+          this.updatingGame = true;
+          this.game = data;
       }, errObj => {
         this.toaster.error(errObj.error.err, 'Error', {
           timeOut: 3000,

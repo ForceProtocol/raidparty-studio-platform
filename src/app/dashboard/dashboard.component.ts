@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
           this.games = data['games'];
           
           for(var key in data['games']){
-            this.games[key].avatar = this.API_HOST + this.games[key].avatar;
+            this.games[key].avatar = this.API_HOST + "/images/games/banners/" + this.games[key].avatar;
           }
 
       }, errObj => {
