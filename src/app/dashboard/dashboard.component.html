@@ -7,7 +7,7 @@
         <div class="row mb-2">
 
           <div class="col-sm-6">
-            <h4 class="m-0 text-dark" *ngIf="games">Your Games</h4>
+            <h4 class="m-0 text-dark" *ngIf="games && games.length > 0">Your Games</h4>
           </div>
           <!-- /.col -->
 
@@ -27,15 +27,38 @@
 
           <div class="col-10 col-md-10">
 
-            <div class="jumbotron" *ngIf="!games">
+            <div class="jumbotron" *ngIf="!games || games.length < 1">
                 <h1 class="display-4">Tell us about your first game</h1>
-                <p class="lead">So that our team can work to secure you extra revenue, please upload information about your games you want us to promote.</p>
+                <p class="lead">Our team will work to secure you extra revenue, based on the information you upload about your games.</p>
+                
+                <p class="lead">
+                  <a class="btn btn-outline-info btn-lg" routerLink="/game/create" role="button">Get Started &raquo;</a>
+                </p>
 
                 <hr class="my-4">
 
-                <p class="lead">
-                  <a class="btn btn-outline-info" routerLink="/game/create" role="button">Get Started &raquo;</a>
-                </p>
+                <p>We have secured advertisement with the following brands:</p>
+
+                <div class="row">
+
+                  <div class="col-3">
+                    <img class="img-fluid" src="/assets/images/blank-screen.png" alt="" />
+                  </div>
+
+                  <div class="col-3">
+                    <img class="img-fluid" src="/assets/images/blank-screen.png" alt="" />
+                  </div>
+
+                  <div class="col-3">
+                    <img class="img-fluid" src="/assets/images/blank-screen.png" alt="" />
+                  </div>
+
+                  <div class="col-3">
+                    <img class="img-fluid" src="/assets/images/blank-screen.png" alt="" />
+                  </div>
+
+                </div>
+
             </div>
 
           </div>

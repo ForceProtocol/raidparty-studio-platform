@@ -39,7 +39,7 @@ p {
 }
 
 section {
-    padding: 100px 0
+    padding: 60px 0
 }
 
 section h2 {
@@ -451,4 +451,12 @@ footer ul li a:hover {
 .google-map iframe {
     height: 100%;
     width: 100%;
+}
+
+.stats .stat-icon {
+    padding: 0 0 40px 0;
+}
+
+#stats {
+    background-color: #f2f2f2;
 }
