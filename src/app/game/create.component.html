@@ -242,7 +242,12 @@
 
                 <div class="col-5 offset-1">
                   <h4>Game screenshot preview</h4>
-                  <img *ngIf="!displayAvatar" class="img img-fluid" src="/assets/images/blank-screen.png" />
+
+                  <div *ngIf="isLoadingImg && !displayAvatar" class="loading-screen text-center">
+                    <img src="/assets/images/loading-gif.gif" alt="Loading..." />
+                  </div>
+
+                  <img *ngIf="!displayAvatar && !isLoadingImg" class="img img-fluid" src="/assets/images/blank-screen.png" />
                   <img *ngIf="displayAvatar" class="img img-fluid" [src]="previewUrl" />
                 </div>
 

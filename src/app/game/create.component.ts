@@ -30,6 +30,7 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
   gameId: any;
   previewUrl: any;
   fileUploadKey: string;
+  isLoadingImg: boolean = false;
 
   fileUploadUrl: string = environment.API_HOST + '/studio/game/upload/image';
   public resourceVideoHdName: string = "";
@@ -173,7 +174,7 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
     // Initialise FileUploader for Image File inputs
     this.imageUploader = new FileUploader({allowedMimeType: allowedImageMimeTypes,url: this.fileUploadUrl, 
       authToken: "Bearer " + this.token, removeAfterUpload: true, itemAlias: 'asset'});
-    this.imageUploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.imageUploader.onAfterAddingFile = (file) => { file.withCredentials = false; this.isLoadingImg = false; };
     this.imageUploader.onErrorItem = (item, response, status, headers) => this.handleFileUploadError(item, response, status, headers);
     this.imageUploader.onWhenAddingFileFailed = (item, filter, options) => this.handleAddingFileFailed(item, filter, options);
     this.imageUploader.onCompleteItem = (item, response, status, headers) => this.handleCompletedFileUpload(item, response, status, headers);
@@ -219,6 +220,7 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
 
       try{
         response = JSON.parse(response);
+        this.isLoadingImg = true;
       }catch(err){
         return false;
       }
