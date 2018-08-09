@@ -68,89 +68,52 @@
           </div>
 
 
-          <div class="col-lg-3 col-sm-6 col-12" *ngFor="let game of games">
-            <div class="card card-info card-outline">
-              <img class="img-fluid game-list-img" src={{game.avatar}}>
-
-              <li class="list-group-item game-title-li">
-
-                <div class="game-download-icon-links">
-
-                  <div class="row">
-                    <div class="col-2 col-md-2">
-                      <div placement="bottom" ngbTooltip="This game has {{game.gameAdAsset.length}} advertising campaigns assigned">
-                        <i class="fa fa-map-marker"></i> &nbsp;{{game.gameAdAsset.length}}
+          <div class="col-11 col-md-11">
+            <table class="table table-hover table-dark">
+              <thead>
+                <tr>
+                  <th>Screenshot</th>
+                  <th>Name</th>
+                  <th>Platform Links</th>
+                  <th>Live Advert Campaigns</th>
+                  <th>Pending Advert Campaigns</th>
+                  <th>Revenue</th>
+                  <th>Options</th>
+                </tr>
+              </thead>
+                <tbody>
+                  <tr *ngFor="let game of games">
+                    <td><img class="img-thumbnail img-fluid campaign-list-thumbnail" src={{game.avatar}} /></td>
+                    <td>{{ game.title }}</td>
+                    <td><div *ngFor="let platform of game.gamePlatforms">
+                      <a class="game-download-link-dark" *ngIf="platform.active" target="play-game" href={{platform.link}}>
+                        <i class="{{platform.fontAwesome}}"></i>
+                      </a></div></td>
+                    <td>{{ game.gameAdAsset.length }}</td>
+                    <td>{{ game.gameAdAsset.length }}</td>
+                    <td>&#36;0.00</td>
+                    <td>
+                      <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Options
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                          <a class="dropdown-item" routerLink="/campaigns/{{ game.id }}">Review Ads</a>
+                          <a class="dropdown-item" routerLink="/game/create/{{ game.id }}">Edit</a>
+                          <a *ngIf="campaignFilter == 'active'" class="dropdown-item" (click)="open(archive,game.id)">Archive Game</a>
+                          <a *ngIf="campaignFilter == 'archived'" class="dropdown-item" (click)="open(removeArchive,game.id)">Re-activate</a>
+                          <a *ngIf="campaignFilter == 'archived'" class="dropdown-item" (click)="open(delete,game.id)">Delete Game</a>
+                        </div>
                       </div>
-                    </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
-                    <div class="col-10 col-md-10">
-                      <ul class="list-inline text-right">
-                        <li class="list-inline-item" *ngFor="let platform of game.gamePlatforms">
-                          <a class="game-download-link" *ngIf="platform.active" target="play-game" href={{platform.link}}>
-                            <i class="{{platform.fontAwesome}}"></i>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                </div>
-
-                <h3>{{game.title}}</h3>
-                <div class="game-description" [innerHTML]="game.dynamicAdsDescription">
-                </div>
-
-                <button type="button" data-toggle="collapse" class="btn btn-outline-primary center" [attr.data-target]="'#' + game.gameId">
-                  Show Demographics
-                </button>
-
-              </li>
-              <li id={{game.gameId}} class="collapse list-group-item popover-hover">
-
-                  <ul class="p-0 mt-2 ">
-                    <li class="list-group-item popover-hover mt-2">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th>MAU:</th>
-                            <th>{{game.monthlyActiveUsers}}</th>
-                          </tr>
-                          <tr>
-                            <th>Monthly Impressions:</th>
-                            <th>{{game.monthlyImpressions}}</th>
-                          </tr>
-                          <tr>
-                            <th>Age Range:</th>
-                            <th>{{game.age}}</th>
-                          </tr>
-                          <tr>
-                            <th>Gender</th>
-                            <th>{{game.gender}}</th>
-                          </tr>
-                          <tr>
-                            <th>Location</th>
-                            <th>{{game.regions}}</th>
-                          </tr>
-                        </thead>
-                      </table>
-                    </li>
-                  </ul>
-
-              </li>
-              <div>
-                <div class="btn-group w-100">
-                  <a [routerLink]="['/game/create', game.id]" class="btn btn-block bg-dark">
-                    <button type="button" class="btn btn-block bg-dark">
-                      Edit Game
-                    </button>
-                  </a>
-                </div>
-              </div>
             </div>
+
           </div>
 
         </div>
-
-      </div>
 
     </section>
