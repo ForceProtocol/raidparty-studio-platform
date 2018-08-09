@@ -86,7 +86,7 @@
                     <div class="col-10 col-md-10">
                       <ul class="list-inline text-right">
                         <li class="list-inline-item" *ngFor="let platform of game.gamePlatforms">
-                          <a *ngIf="platform.active" target="play-game" href={{platform.link}}>
+                          <a class="game-download-link" *ngIf="platform.active" target="play-game" href={{platform.link}}>
                             <i class="{{platform.fontAwesome}}"></i>
                           </a>
                         </li>

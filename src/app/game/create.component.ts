@@ -5,11 +5,13 @@ import { NavigationStart, Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth.service';
 import { GameService } from '../services/game.service';
+import { UserService } from '../services/user.service';
 import { GameAdAssetService } from '../services/game-ad-asset.service';
 import { FileUploader, FileSelectDirective, FileLikeObject } from 'ng2-file-upload/ng2-file-upload';
 import { environment } from '../../environments/environment';
 import { NgTempusdominusBootstrapModule } from 'ngx-tempusdominus-bootstrap';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ValidateUrl } from '../validators/url.validator';
 import * as moment from 'moment';
 
 
@@ -32,6 +34,26 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
   fileUploadKey: string;
   isLoadingImg: boolean = false;
   sub: any;
+  savingForm: boolean = false;
+
+  // Form Default Input Names
+  avatarFile: any;
+  pcPlatform: any;
+  macPlatform: any;
+  consolePlatform: any;
+  androidPlatform: any;
+  iosPlatform:any;
+  pcChecked: boolean;
+  macChecked: boolean;
+  consoleChecked: boolean;
+  androidChecked: boolean;
+  iosChecked: boolean;
+  pcLink: string;
+  macLink: string;
+  consoleLink: string;
+  androidLink: string;
+  iosLink: string;
+
 
   fileUploadUrl: string = environment.API_HOST + '/studio/game/upload/image';
   public resourceVideoHdName: string = "";
@@ -49,6 +71,7 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
     private titleService: Title,
     private auth: AuthService,
     private modalService: NgbModal,
+    private userService: UserService,
   ) {
     const user = localStorage.getItem('user');
 
@@ -85,6 +108,7 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
 
 
   ngOnDestroy(){
+    this.savingForm = false;
     this.sub.unsubscribe();
   }
 
@@ -110,10 +134,41 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
   * Get latest data for the selected game from the server
   */
   loadGameData(gameId){
-    this.gameService.getGame(gameId)
+    this.userService.getGame(gameId)
       .subscribe((data) => {
           this.updatingGame = true;
           this.game = data;
+
+          this.pcPlatform = this.game.gamePlatforms.find(x => x.type == "pc");
+          this.macPlatform = this.game.gamePlatforms.find(x => x.type == "mac");
+          this.consolePlatform = this.game.gamePlatforms.find(x => x.type == "console");
+          this.androidPlatform = this.game.gamePlatforms.find(x => x.type == "android");
+          this.iosPlatform = this.game.gamePlatforms.find(x => x.type == "ios");
+
+
+          if(this.pcPlatform){
+            this.pcChecked = true;
+            this.pcLink = this.pcPlatform.link;
+          }
+          if(this.macPlatform){
+            this.macChecked = true;
+            this.macLink = this.macPlatform.link;
+          }
+          if(this.consolePlatform){
+            this.consoleChecked = true;
+            this.consoleLink = this.consolePlatform.link;
+          }
+          if(this.androidPlatform){
+            this.androidChecked = true;
+            this.androidLink = this.androidPlatform.link;
+          }
+          if(this.iosPlatform){
+            this.iosChecked = true;
+            this.iosLink = this.iosPlatform.link;
+          }
+
+          this.updateForm();
+
       }, errObj => {
         this.toaster.error(errObj.error.err, 'Error', {
           timeOut: 3000,
@@ -140,13 +195,14 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
       android: [''],
       ios: [''],
       console: [''],
-      pcLink: [''],
-      macLink: [''],
-      consoleLink: [''],
-      androidLink: [''],
-      iosLink: ['']
+      pcLink: ['',ValidateUrl],
+      macLink: ['', ValidateUrl],
+      consoleLink: ['',ValidateUrl],
+      androidLink: ['',ValidateUrl],
+      iosLink: ['',ValidateUrl]
     });
   }
+
 
 
   /**
@@ -154,18 +210,14 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
   * and set the values of inputs to the loaded game ad asset (campaign)
   */
   updateForm(){
-    if(!this.createGameForm.get('gameAdAssetId')){
+    // Add the game ad asset ID to the form so we know what to update
+    this.createGameForm.addControl('gameId',new FormControl(['',Validators.required]));
+    this.createGameForm.controls['gameId'].setValue(this.game.id);
 
-      // Select the game asset this game ad asset is linked to
-      //this.selectGameAsset(this.gameAdAsset.gameAsset.id);
-
-      // Add the game ad asset ID to the form so we know what to update
-      //this.campaignForm.addControl('gameAdAssetId',new FormControl(['',Validators.required]));
-
-      // Set Default Values from loaded game ad asset
-      //this.campaignForm.controls['resourceUrlHd'].setValue(this.gameAdAsset.resourceUrlHd);
-      
-    }
+    // Set Default Values from loaded game ad asset
+    this.createGameForm.controls['avatar'].setValue(this.game.avatar);
+    this.previewUrl = this.API_HOST + "/images/games/banners/" + this.game.avatar;
+    this.displayAvatar = true;
   }
 
 
@@ -252,7 +304,6 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
 
         // Input file item uploaded was item.options.additionalParameter.fileInputName
         this.createGameForm.controls[item.options.additionalParameter.inputValueTarget].setValue(response.fileName);
-        this[item.options.additionalParameter.inputValueTarget] = response.fileName;
       }
   }
 
@@ -291,6 +342,7 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
 
   createGame() {
 
+    this.savingForm = true;
     this.createGameForm.markAsPristine();
 
     this.gameService.addGame(this.createGameForm.value)
@@ -299,9 +351,11 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
+        this.savingForm = false;
         this.router.navigate(['/dashboard']);
       },
       (errObj) => {
+        this.savingForm = false;
         this.createGameForm.markAsDirty();
         this.toaster.error(errObj.error.err, 'Error', {
           timeOut: 3000,
@@ -312,15 +366,23 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
 
 
   updateGame() {
-    this.gameService.updateGame(this.createGameForm.value,this.gameId)
+
+    this.savingForm = true;
+    this.createGameForm.markAsPristine();
+
+    this.gameService.updateGame(this.createGameForm.value,this.game.id)
       .subscribe((data) => {
-        this.toaster.success("Your new game was created successfully. Our team will now review the game and reach out to secure brand placement.", 'New Game Received', {
+        this.toaster.success("Your new game was updated successfully.", 'Game Updated', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
+
+        this.savingForm = false;
         this.router.navigate(['/dashboard']);
       },
       (errObj) => {
+        this.savingForm = false;
+        this.createGameForm.markAsDirty();
         this.toaster.error(errObj.error.err, 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
@@ -339,6 +401,16 @@ export class CreateGameComponent implements OnInit, OnDestroy  {
         }
 
         reader.readAsDataURL(event.target.files[0]);
+      }
+    }
+
+
+    // Platform type checkbox changed
+    // Remove the link if it is unchecked to clear validation
+    // on platform type link
+    platformChecked(isChecked,linkKey){
+      if(!isChecked){
+        this.createGameForm.controls[linkKey].setValue("");
       }
     }
 

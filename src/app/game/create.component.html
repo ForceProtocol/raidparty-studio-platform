@@ -23,7 +23,13 @@
       <div class="container-fluid">
 
         <div class="col-10 col-md-10">
-          <div class="mt-2">
+
+          <div *ngIf="savingForm" class="loading-screen text-center">
+            <img src="/assets/images/loading-gif.gif" alt="Loading..." />
+          </div>
+
+
+          <div *ngIf="!savingForm" class="mt-2">
 
             <div class="alert alert-success">
               <p>Once you complete the form below, our team will receive a notification to start work on your game.</p>
@@ -65,7 +71,7 @@
                     <div class="form-group">
                       <label>Game Screenshot *</label>
                       <p><small>Upload a cover image of your game.<br />No larger than 1500px X 1500px, .png, .jpeg, .jpg, .gif file formats accepted.</small></p>
-                      <input required type="file" class="form-control-file" (change)="setPreviewImage($event)" (change)="setFileUploadAdditionalParameters(imageUploader,'avatar', 'image')" ng2FileSelect [uploader]="imageUploader" formControlName="avatarFile">
+                      <input type="file" class="form-control-file" (change)="setPreviewImage($event)" (change)="setFileUploadAdditionalParameters(imageUploader,'avatar', 'image')" ng2FileSelect [uploader]="imageUploader" formControlName="avatarFile">
 
                       <small [hidden]="createGameForm.controls.avatarFile.valid || createGameForm.controls.avatarFile.pristine" class="text-danger">
                         A game screenshot is required
@@ -119,27 +125,27 @@
                       <label>What platforms is your game built for?</label>
 
                       <div class="form-check">
-                        <input id="pc" class="form-check-input" type="checkbox" formControlName="pc" [(ngModel)]="pcChecked" />
+                        <input id="pc" class="form-check-input" type="checkbox" (change)="platformChecked(pcChecked,'pcLink')" formControlName="pc" [(ngModel)]="pcChecked" />
                         <label for="pc" class="form-check-label">PC</label>
                       </div>
 
                       <div class="form-check">
-                        <input id="mac" class="form-check-input" type="checkbox" formControlName="mac" [(ngModel)]="macChecked" />
+                        <input id="mac" class="form-check-input" type="checkbox" (change)="platformChecked(macChecked,'macLink')" formControlName="mac" [(ngModel)]="macChecked" />
                         <label for="mac" class="form-check-label">MAC</label>
                       </div>
 
                       <div class="form-check">
-                        <input id="console" class="form-check-input" type="checkbox" formControlName="console"  [(ngModel)]="consoleChecked" />
+                        <input id="console" class="form-check-input" type="checkbox" (change)="platformChecked(consoleChecked,'consoleLink')" formControlName="console"  [(ngModel)]="consoleChecked" />
                         <label for="console" class="form-check-label">Consoles</label>
                       </div>
 
                       <div class="form-check">
-                        <input id="android" class="form-check-input" type="checkbox" formControlName="android"  [(ngModel)]="androidChecked" />
+                        <input id="android" class="form-check-input" type="checkbox" (change)="platformChecked(androidChecked,'androidLink')" formControlName="android"  [(ngModel)]="androidChecked" />
                         <label for="android" class="form-check-label">Android</label>
                       </div>
 
                       <div class="form-check">
-                        <input id="ios" class="form-check-input" type="checkbox" formControlName="ios" [(ngModel)]="iosChecked" />
+                        <input id="ios" class="form-check-input" type="checkbox" (change)="platformChecked(iosChecked,'iosLink')" formControlName="ios" [(ngModel)]="iosChecked" />
                         <label for="ios" class="form-check-label">iOS</label>
                       </div>
 
@@ -153,27 +159,42 @@
 
                     <div *ngIf="pcChecked" class="form-group">
                       <label>PC Download Link:</label>
-                      <input required type="text" class="form-control" placeholder="E.g. https://store.steampowered.com/app/505740/Eximius_Seize_the_Frontline/" formControlName="pcLink">
+                      <input [(ngModel)]="pcLink" type="text" class="form-control" placeholder="E.g. https://store.steampowered.com/app/505740/Eximius_Seize_the_Frontline/" formControlName="pcLink">
+                      <small *ngIf="createGameForm.get('pcLink').errors && createGameForm.get('pcLink').dirty && createGameForm.get('pcLink').errors.invalidUrl" class="text-danger">
+                        You must provide a valid URL link
+                      </small>
                     </div>
 
                      <div *ngIf="macChecked" class="form-group">
                       <label>MAC Download Link:</label>
-                      <input required type="text" class="form-control" placeholder="E.g. https://store.steampowered.com/app/505740/Eximius_Seize_the_Frontline/" formControlName="macLink">
+                      <input [(ngModel)]="macLink" type="text" class="form-control" placeholder="E.g. https://store.steampowered.com/app/505740/Eximius_Seize_the_Frontline/" formControlName="macLink">
+                      <small *ngIf="createGameForm.get('macLink').errors && createGameForm.get('macLink').dirty && createGameForm.get('macLink').errors.invalidUrl" class="text-danger">
+                        You must provide a valid URL link
+                      </small>
                     </div>
 
                     <div *ngIf="consoleChecked" class="form-group">
                       <label>Console Download Link:</label>
-                      <input required type="text" class="form-control" placeholder="E.g. https://www.playstation.com/en-us/games/fortnite-ps4/" formControlName="consoleLink">
+                      <input [(ngModel)]="consoleLink" type="text" class="form-control" placeholder="E.g. https://www.playstation.com/en-us/games/fortnite-ps4/" formControlName="consoleLink">
+                      <small *ngIf="createGameForm.get('consoleLink').errors && createGameForm.get('consoleLink').dirty && createGameForm.get('consoleLink').errors.invalidUrl" class="text-danger">
+                        You must provide a valid URL link
+                      </small>
                     </div>
 
                     <div *ngIf="androidChecked" class="form-group">
                       <label>Android Download Link:</label>
-                      <input required type="text" class="form-control" placeholder="E.g. https://play.google.com/store/apps/details?id=com.app.Raidparty" formControlName="androidLink">
+                      <input [(ngModel)]="androidLink" type="text" class="form-control" placeholder="E.g. https://play.google.com/store/apps/details?id=com.app.Raidparty" formControlName="androidLink">
+                      <small *ngIf="createGameForm.get('androidLink').errors && createGameForm.get('androidLink').dirty && createGameForm.get('androidLink').errors.invalidUrl" class="text-danger">
+                        You must provide a valid URL link
+                      </small>
                     </div>
 
                     <div *ngIf="iosChecked" class="form-group">
                       <label>iOS Download Link:</label>
-                      <input required type="text" class="form-control" placeholder="E.g. https://www.apple.com/uk/ios/app-store/" formControlName="iosLink">
+                      <input [(ngModel)]="iosLink" type="text" class="form-control" placeholder="E.g. https://www.apple.com/uk/ios/app-store/" formControlName="iosLink">
+                      <small *ngIf="createGameForm.get('iosLink').errors && createGameForm.get('iosLink').dirty && createGameForm.get('iosLink').errors.invalidUrl" class="text-danger">
+                        You must provide a valid URL link
+                      </small>
                     </div>
 
                   </fieldset>

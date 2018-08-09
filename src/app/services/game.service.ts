@@ -51,7 +51,7 @@ export class GameService {
   }
 
   updateGame(params,gameId) {
-    return this.http.post(`${environment.API_HOST}/studio/game/${gameId}`, params)
+    return this.http.post(`${environment.API_HOST}/studio/game/${gameId}?token=${this.token}`, params)
       .map((response) => {
         return response;
       });

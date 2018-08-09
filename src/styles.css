@@ -10486,6 +10486,12 @@ a .fa:active, a .fa:hover, a .fa:visited, a .fa {
 	color: #212529;
 }
 
+a.game-download-link, a.game-download-link:active, a.game-download-link:visited {
+	color: #212529;
+}
+a.game-download-link:hover {
+	color: #404346;
+}
 
 
 .public-page {
