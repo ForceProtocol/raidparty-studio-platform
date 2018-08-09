@@ -7,7 +7,7 @@
         <div class="row mb-2">
 
           <div class="col-sm-6">
-            <h4 class="m-0 text-dark" *ngIf="games && games.length > 0">Your Games</h4>
+            <h4 class="m-0 text-dark" *ngIf="games && games.length > 0 && !isLoading">Your Games</h4>
           </div>
           <!-- /.col -->
 
@@ -27,7 +27,11 @@
 
           <div class="col-10 col-md-10">
 
-            <div class="jumbotron" *ngIf="!games || games.length < 1">
+            <div *ngIf="isLoading" class="loading-screen text-center">
+              <img src="/assets/images/loading-gif.gif" alt="Loading..." />
+            </div>
+
+            <div class="jumbotron" *ngIf="!isLoading && (!games || games.length < 1)">
                 <h1 class="display-4">Tell us about your first game</h1>
                 <p class="lead">Our team will work to secure you extra revenue, based on the information you upload about your games.</p>
                 

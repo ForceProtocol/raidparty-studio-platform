@@ -15,6 +15,8 @@ export class DashboardComponent implements OnInit {
   games: any;
   API_HOST: string = environment.API_HOST;
 
+  isLoading: boolean = true;
+
   constructor(
     private authService: AuthService,
     private toaster: ToastrService,
@@ -26,6 +28,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.userService.getGames()
       .subscribe((data) => {
+          this.isLoading = false;
+          
           this.games = data['games'];
           
           for(var key in data['games']){
