@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Router,ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
+import { Location, PopStateEvent } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -20,6 +20,8 @@ export class TopNavbarComponent implements OnInit {
   currentPassword: string;
   newPassword: string;
   newPasswordRepeat: string;
+  private lastPoppedUrl: string;
+  private yScrollStack: number[] = [];
 
   constructor(
     private auth: AuthService,
@@ -33,6 +35,21 @@ export class TopNavbarComponent implements OnInit {
 
   ngOnInit() {
     this.getNotification();
+    this.location.subscribe((ev:PopStateEvent) => {
+          this.lastPoppedUrl = ev.url;
+      });
+      this.router.events.subscribe((ev:any) => {
+          if (ev instanceof NavigationStart) {
+              if (ev.url != this.lastPoppedUrl)
+                  this.yScrollStack.push(window.scrollY);
+          } else if (ev instanceof NavigationEnd) {
+              if (ev.url == this.lastPoppedUrl) {
+                  this.lastPoppedUrl = undefined;
+                  window.scrollTo(0, this.yScrollStack.pop());
+              } else
+                  window.scrollTo(0, 0);
+          }
+      });
   }
 
   isActive(state) {

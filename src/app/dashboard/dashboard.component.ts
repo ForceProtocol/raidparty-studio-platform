@@ -47,12 +47,12 @@ export class DashboardComponent implements OnInit {
 
   loadGames(){
 
+    this.isLoading = true;
+
     if(this.gameFilter == 'active'){
-      console.log("searching for active games");
       this.active = true;
       this.archived = false;
     }else if(this.gameFilter == 'archived'){
-      console.log("searching for archived games");
       this.active = false;
       this.archived = true;
     }

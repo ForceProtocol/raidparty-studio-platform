@@ -31,7 +31,7 @@
               <img src="/assets/images/loading-gif.gif" alt="Loading..." />
             </div>
 
-            <div class="jumbotron" *ngIf="!isLoading && (!games || games.length < 1)">
+            <div class="jumbotron" *ngIf="!isLoading && gameFilter != 'archived' && (!games || games.length < 1)">
                 <h1 class="display-4">Tell us about your game</h1>
                 <p class="lead">Our team will work to secure you extra revenue, based on the information you upload about your games.</p>
                 
@@ -65,7 +65,18 @@
 
             </div>
 
+
+            <div class="alert alert-info" *ngIf="!isLoading && gameFilter == 'archived' && (!games || games.length < 1)">
+                <h1 class="display-4">Archive Empty</h1>
+                <p>Your archived games store is empty.</p>
+            </div>
+
+
+
           </div>
+
+
+
 
 
           <div *ngIf="!isLoading && games && games.length > 0" class="col-11 col-md-11">
