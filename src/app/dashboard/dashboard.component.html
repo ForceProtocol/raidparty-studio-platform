@@ -85,9 +85,9 @@
                 <tr>
                   <th>Screenshot</th>
                   <th>Name</th>
-                  <th>Platform Links</th>
-                  <th>Live Advert Campaigns</th>
-                  <th>Pending Advert Campaigns</th>
+                  <th>Game Links</th>
+                  <th>Live Campaigns</th>
+                  <th>Pending Campaigns</th>
                   <th>Revenue</th>
                   <th>Options</th>
                 </tr>
@@ -96,10 +96,11 @@
                   <tr *ngFor="let game of games">
                     <td><img class="img-thumbnail img-fluid campaign-list-thumbnail" src={{game.avatar}} /></td>
                     <td>{{ game.title }}</td>
-                    <td><div *ngFor="let platform of game.gamePlatforms">
-                      <a class="game-download-link-dark" *ngIf="platform.active" target="play-game" href={{platform.link}}>
-                        <i class="{{platform.fontAwesome}}"></i>
-                      </a></div></td>
+                    <td><ul class="list-inline">
+                        <li class="list-inline-item" *ngFor="let platform of game.gamePlatforms"><a class="game-download-link-dark" *ngIf="platform.active" target="play-game" href={{platform.link}}>
+                          <i class="{{platform.fontAwesome}}"></i></a>
+                        </li>
+                      </ul></td>
                     <td>{{ game.gameAdAsset.length }}</td>
                     <td>{{ game.gameAdAsset.length }}</td>
                     <td>&#36;0.00</td>
