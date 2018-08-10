@@ -7,11 +7,11 @@
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-header">OPTIONS</li>
             <li class="nav-item">
-               <a (click)="setGameFilter('active')" [ngClass]="{'active': gameFilter === 'active'}" class="nav-link ">
-                  <p><i class="fa fa-check"></i>&nbsp; Scheduled Campaigns</p>
+               <a (click)="setGameCampaignFilter('approved')" [ngClass]="{'active': gameCampaignFilter === 'approved'}" class="nav-link ">
+                  <p><i class="fa fa-check"></i>&nbsp; Approved Adverts</p>
                </a>
-               <a (click)="setGameFilter('archived')" [ngClass]="{'active': gameFilter === 'archived'}" class="nav-link ">
-                  <p><i class="fa fa-archive"></i>&nbsp; Archived Campaigns</p>
+               <a (click)="setGameCampaignFilter('pending')" [ngClass]="{'active': gameCampaignFilter === 'pending'}" class="nav-link ">
+                  <p><i class="fa fa-archive"></i>&nbsp; Pending Adverts &nbsp;<i *ngIf="gameCampaignCount > 0" class="fas fa-exclamation-circle danger"></i></p>
                </a>
             </li>
          </ul>

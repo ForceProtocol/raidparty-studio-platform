@@ -25,14 +25,14 @@
 
         <div class="row">
 
-          <div class="col-10 col-md-10 table">
+          <div class="col-10 col-md-10">
 
             <div *ngIf="gameAdAssets.length < 1" class="alert alert-info">
-              <p *ngIf="campaignFilter == 'active'">You do not have any active advertising campaigns</p>
-              <p *ngIf="campaignFilter == 'archived'">You do not have any archived advertising campaigns</p>
+              <p *ngIf="campaignFilter == 'approved'">You do not have any approved advertising campaigns</p>
+              <p *ngIf="campaignFilter == 'pending'">You do not have any pending advertising campaigns</p>
             </div>
 
-            <table *ngIf="gameAdAssets.length > 0" class="table table-hover">
+            <table *ngIf="gameAdAssets.length > 0" class="table table-hover table-dark">
               <thead>
                 <tr>
                   <th></th>
@@ -53,19 +53,16 @@
                   <td>{{ gameAdAsset.totalExposure }}</td>
                   <td>{{ gameAdAsset.startDate }}</td>
                   <td>{{ gameAdAsset.endDate }}</td>
-                  <td>{{ gameAdAsset.status }} &nbsp;<i *ngIf="gameAdAsset.status == 'Pending'" ngbTooltip="Pending status means this campaign is awaiting approval from the game owner before it goes live" class="fa fa-question-circle"></i></td>
+                  <td>{{ gameAdAsset.status }} &nbsp;<i *ngIf="gameAdAsset.status == 'Pending'" ngbTooltip="Pending status means this campaign is awaiting your approval" class="fa fa-question-circle"></i></td>
                   <td>
                     <div class="btn-group" role="group">
                       <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Options
                       </button>
                       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a *ngIf="gameAdAsset.active" class="dropdown-item" (click)="open(pause,gameAdAsset.id,0)">Pause</a>
-                        <a *ngIf="!gameAdAsset.active" class="dropdown-item" (click)="open(activate,gameAdAsset.id,1)">Activate</a>
-                        <a class="dropdown-item" routerLink="/start-campaign/{{ gameAdAsset.game.id + '/' + gameAdAsset.id}}">Edit</a>
-                        <a *ngIf="campaignFilter == 'active'" class="dropdown-item" (click)="open(archive,gameAdAsset.id)">Archive Campaign</a>
-                        <a *ngIf="campaignFilter == 'archived'" class="dropdown-item" (click)="open(removeArchive,gameAdAsset.id)">Re-activate</a>
-                        <a *ngIf="campaignFilter == 'archived'" class="dropdown-item" (click)="open(delete,gameAdAsset.id)">Delete Campaign</a>
+                        <a *ngIf="gameAdAsset.approved" class="dropdown-item" (click)="open(stop,gameAdAsset.id,0)">Stop Advert</a>
+                        <a *ngIf="!gameAdAsset.approved" class="dropdown-item" (click)="open(activate,gameAdAsset.id,1)">Approve Advert</a>
+                        <a class="dropdown-item" routerLink="/start-campaign/{{ gameAdAsset.game.id + '/' + gameAdAsset.id}}">Download Asset</a>
                       </div>
                     </div>
                   </td>
@@ -81,89 +78,17 @@
     </section>
 
 
-    <ng-template #archive let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm Archive</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure you wish to archive this campaign?</p>
-
-        <div class="form-group">
-          <div class="input-group">
-            <input [(ngModel)]="selectedCampaignId" type="hidden">
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
-        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('archive')">Yes, archive it!</button>
-      </div>
-    </ng-template>
-
-
-    <ng-template #delete let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm Delete</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <div class="alert alert-danger">
-          <p>Are you sure you wish to permanently delete this campaign?</p>
-        </div>
-
-        <div class="form-group">
-          <div class="input-group">
-            <input [(ngModel)]="selectedCampaignId" type="hidden">
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
-        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('delete')">Yes, delete it!</button>
-      </div>
-    </ng-template>
-
-
-    <ng-template #removeArchive let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm Remove From Archive</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <p>Are you sure you wish to re-enable this campaign and remove it from the archive?</p>
-
-        <div class="form-group">
-          <div class="input-group">
-            <input [(ngModel)]="selectedCampaignId" type="hidden">
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
-        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('removeArchive')">Yes, re-enable it!</button>
-      </div>
-    </ng-template>
-
 
     <ng-template #activate let-c="close" let-d="dismiss">
       <div class="modal-header">
-        <h4 class="modal-title">Confirm Activate</h4>
+        <h4 class="modal-title">Approve Advert</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 
-        <p>Are you sure you wish to activate this campaign?</p>
+        <p>Are you sure you wish to activate this advert?</p>
 
         <div class="form-group">
           <div class="input-group">
@@ -180,16 +105,17 @@
 
 
 
-    <ng-template #pause let-c="close" let-d="dismiss">
+    <ng-template #stop let-c="close" let-d="dismiss">
       <div class="modal-header">
-        <h4 class="modal-title">Confirm Pause</h4>
+        <h4 class="modal-title">Confirm Stop Advert</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 
-        <p>Are you sure you wish to pause this campaign?</p>
+        <p>Are you sure you wish to stop this advert?</p>
+        <p><small>By stopping this advert it will be placed into the 'Pending' options for your later approval.</small></p>
 
         <div class="form-group">
           <div class="input-group">
@@ -200,6 +126,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
-        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('activate')">Yes, pause it!</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('activate')">Yes, stop it!</button>
       </div>
     </ng-template>

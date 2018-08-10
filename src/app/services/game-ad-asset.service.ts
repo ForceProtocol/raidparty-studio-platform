@@ -38,10 +38,10 @@ export class GameAdAssetService {
 
 
   /**
-  * Get all game ad assets (advertisers campaigns)
+  * Get all game ad assets (advertisers adverts)
   */
-  getGameAdCampaigns(active,archived){
-    return this.http.get(`${environment.API_HOST}/web/advertiser/campaigns?token=${this.token}&active=${active}&archived=${archived}`)
+  getGameAdverts(approved){
+    return this.http.get(`${environment.API_HOST}/studio/game/adverts?token=${this.token}&approved=${approved}`)
     .map(response => response);
   }
 

@@ -8,10 +8,16 @@ export class EventService {
     private gameFilter = new Subject<any>();
     private gameFilterValue: string;
 
+    private gameCampaignFilter = new Subject<any>();
+    private gameCampaignFilterValue: string;
+
+
     listen(): Observable<any> {
        return this._listners.asObservable();
     }
 
+
+    /** GAME FILTERS **/
     getGameFilter(): Observable<any> {
     	return this.gameFilter.asObservable();
     }
@@ -24,5 +30,22 @@ export class EventService {
     getGameFilterValue(){
         return this.gameFilterValue;
     }
+
+
+
+    /** GAME CAMPAIGN FILTERS **/
+    getGameCampaignFilter(): Observable<any> {
+        return this.gameCampaignFilter.asObservable();
+    }
+
+    setGameCampaignFilter(filterBy: string) {
+       this.gameCampaignFilterValue = filterBy;
+       this.gameCampaignFilter.next(filterBy);
+    }
+
+    getGameCampaignFilterValue(){
+        return this.gameCampaignFilterValue;
+    }
+
 
 }

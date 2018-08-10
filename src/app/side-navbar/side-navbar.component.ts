@@ -10,6 +10,7 @@ import { EventService } from '../services/eventEmitter.service';
 
 export class SideNavbarComponent implements OnInit {
   gameFilter: string;
+  gameCampaignFilter: string;
   activeRoute: string;
 
   constructor(
@@ -20,12 +21,18 @@ export class SideNavbarComponent implements OnInit {
 
   ngOnInit() {
       this.gameFilter = 'active';
+      this.gameCampaignFilter = 'approved';
       this.messageService.setGameFilter(this.gameFilter);
   }
 
   setGameFilter(value): void {
     this.gameFilter = value;
     this.messageService.setGameFilter(value);
+  }
+
+  setGameCampaignFilter(value): void {
+    this.gameCampaignFilter = value;
+    this.messageService.setGameCampaignFilter(value);
   }
 
   isActive(state) {

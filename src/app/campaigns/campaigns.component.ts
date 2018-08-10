@@ -20,8 +20,8 @@ export class CampaignsComponent implements OnInit {
   closeResult: string;
   selectedCampaignId: string;
   campaignFilter: string;
-  active: boolean = true;
-  archived: boolean = false;
+  approved: boolean = true;
+  pending: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -31,30 +31,29 @@ export class CampaignsComponent implements OnInit {
     private modalService: NgbModal,
     private helperService: HelperService,
   ) {
-    this.eventService.getGameFilter().subscribe((msg: any) => {
-      this.campaignFilter = msg;
-      this.loadGameCampaigns();
-    });
   }
 
   ngOnInit() {
-    this.campaignFilter = this.eventService.getGameFilterValue();
+    this.campaignFilter = this.eventService.getGameCampaignFilterValue();
+    this.eventService.getGameCampaignFilter().subscribe((msg: any) => {
+      this.campaignFilter = msg;
+      this.loadGameCampaigns();
+    });
+
     this.loadGameCampaigns();
   }
 
 
   loadGameCampaigns(){
 
-    if(this.campaignFilter == 'active'){
-      this.active = true;
-      this.archived = false;
-    }else if(this.campaignFilter == 'archived'){
-      this.active = false;
-      this.archived = true;
+    if(this.campaignFilter == 'approved'){
+      this.approved = true;
+    }else if(this.campaignFilter == 'pending'){
+      this.approved = false;
     }
 
 
-    this.gameAdAssetService.getGameAdCampaigns(this.active,this.archived).subscribe((data) => {
+    this.gameAdAssetService.getGameAdverts(this.approved).subscribe((data) => {
 
           this.gameAdAssets = data['campaigns'];
 

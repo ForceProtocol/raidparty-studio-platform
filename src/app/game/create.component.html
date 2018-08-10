@@ -31,11 +31,6 @@
 
           <div *ngIf="!savingForm" class="mt-2">
 
-            <div class="alert alert-success">
-              <p>Once you complete the form below, our team will receive a notification to start work on your game.</p>
-            </div>
-
-
             <form [formGroup]="createGameForm">
 
               <input *ngIf="createGameForm.get('gameAdAssetId')" type="hidden" [value]="gameAdAsset.id" formControlName="gameAdAssetId" />
@@ -262,6 +257,10 @@
 
 
                 <div class="col-5 offset-1">
+                  <div class="alert alert-info">
+                    <p>Once you complete the form our team will receive a notification to start work on your game.</p>
+                  </div>
+
                   <h4>Game screenshot preview</h4>
 
                   <div *ngIf="isLoadingImg && !displayAvatar" class="loading-screen text-center">
