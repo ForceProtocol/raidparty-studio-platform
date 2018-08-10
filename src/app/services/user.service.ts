@@ -31,8 +31,8 @@ export class UserService {
   }
 
 
-  getGames(){
-    return this.http.get(`${environment.API_HOST}/studio/games?token=${this.token}`)
+  getGames(active,archived){
+    return this.http.get(`${environment.API_HOST}/studio/games?token=${this.token}&active=${active}&archived=${archived}`)
     .map(response => response);
   }
 

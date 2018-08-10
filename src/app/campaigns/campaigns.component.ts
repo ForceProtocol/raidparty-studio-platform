@@ -26,19 +26,19 @@ export class CampaignsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private toaster: ToastrService,
-    private messageService: EventService,
+    private eventService: EventService,
     private gameAdAssetService: GameAdAssetService,
     private modalService: NgbModal,
     private helperService: HelperService,
   ) {
-    this.messageService.getCampaignFilter().subscribe((msg: any) => {
+    this.eventService.getGameFilter().subscribe((msg: any) => {
       this.campaignFilter = msg;
       this.loadGameCampaigns();
     });
   }
 
   ngOnInit() {
-    this.campaignFilter = this.messageService.getCampaignFilterValue();
+    this.campaignFilter = this.eventService.getGameFilterValue();
     this.loadGameCampaigns();
   }
 

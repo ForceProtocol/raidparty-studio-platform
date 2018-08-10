@@ -68,7 +68,7 @@
           </div>
 
 
-          <div class="col-11 col-md-11">
+          <div *ngIf="!isLoading && games && games.length > 0" class="col-11 col-md-11">
             <table class="table table-hover table-dark">
               <thead>
                 <tr>
@@ -98,11 +98,12 @@
                           Options
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                          <a class="dropdown-item" routerLink="/campaigns/{{ game.id }}">Review Ads</a>
-                          <a class="dropdown-item" routerLink="/game/create/{{ game.id }}">Edit</a>
-                          <a *ngIf="campaignFilter == 'active'" class="dropdown-item" (click)="open(archive,game.id)">Archive Game</a>
-                          <a *ngIf="campaignFilter == 'archived'" class="dropdown-item" (click)="open(removeArchive,game.id)">Re-activate</a>
-                          <a *ngIf="campaignFilter == 'archived'" class="dropdown-item" (click)="open(delete,game.id)">Delete Game</a>
+                          <a class="dropdown-item" routerLink="/game/create/{{ game.id }}">Edit Game</a>
+                          <a class="dropdown-item" routerLink="/campaigns/{{ game.id }}">Review Adverts</a>
+                          <a class="dropdown-item" (click)="pauseAdverts(game.id)">Pause All Adverts</a>
+                          <a *ngIf="gameFilter == 'archived'" class="dropdown-item" (click)="open(removeArchive,game.id)">Re-activate</a>
+                          <a *ngIf="gameFilter == 'active'" class="dropdown-item danger" (click)="open(archive,game.id)">Archive Game</a>
+                          <a *ngIf="gameFilter == 'archived'" class="dropdown-item danger" (click)="open(delete,game.id)">Delete Game</a>
                         </div>
                       </div>
                     </td>
@@ -117,3 +118,128 @@
         </div>
 
     </section>
+
+
+
+    <ng-template #archive let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Archive</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you wish to archive this game?</p>
+
+        <div class="form-group">
+          <div class="input-group">
+            <input [(ngModel)]="selectedGameId" type="hidden">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('archive')">Yes, archive it!</button>
+      </div>
+    </ng-template>
+
+
+    <ng-template #delete let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="alert alert-danger">
+          <p>Are you sure you wish to permanently delete this game?</p>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <input [(ngModel)]="selectedGameId" type="hidden">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('delete')">Yes, delete it!</button>
+      </div>
+    </ng-template>
+
+
+    <ng-template #removeArchive let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Remove From Archive</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <p>Are you sure you wish to re-enable this game and remove it from the archive?</p>
+
+        <div class="form-group">
+          <div class="input-group">
+            <input [(ngModel)]="selectedGameId" type="hidden">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('removeArchive')">Yes, re-enable it!</button>
+      </div>
+    </ng-template>
+
+
+    <ng-template #activate let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Activate</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <p>Are you sure you wish to activate this game?</p>
+
+        <div class="form-group">
+          <div class="input-group">
+            <input [(ngModel)]="selectedGameId" type="hidden">
+          </div>
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('activate')">Yes, activate it!</button>
+      </div>
+    </ng-template>
+
+
+
+    <ng-template #pause let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Pause</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <p>Are you sure you wish to pause this game?</p>
+
+        <div class="form-group">
+          <div class="input-group">
+            <input [(ngModel)]="selectedGameId" type="hidden">
+          </div>
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('activate')">Yes, pause it!</button>
+      </div>
+    </ng-template>

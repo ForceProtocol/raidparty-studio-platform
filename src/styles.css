@@ -10583,3 +10583,30 @@ body.dialog-open {
     transform: translate3d(0, 0, 0); }
   .nsm-dialog-animation-btt.nsm-dialog-close {
     transform: translate3d(0, 50%, 0); }
+
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #0056b3;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+.dropdown-menu .dropdown-item {
+	font-size: 14px;
+    min-width: 170px;
+    background: #fff;
+    padding: 6px 10px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dropdown-menu .dropdown-item.danger {
+    border-bottom: none;
+    border-radius: 0 0 5px 5px;
+    border-top: 1px solid #dfdfdf;
+    color: #ed4f32;
+    padding-top: 10px;
+    padding-bottom: 2px;
+}

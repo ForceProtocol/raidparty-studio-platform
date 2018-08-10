@@ -7,10 +7,10 @@
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-header">OPTIONS</li>
             <li class="nav-item">
-               <a (click)="setCampaignFilter('active')" [ngClass]="{'active': campaignFilter === 'active'}" class="nav-link ">
+               <a (click)="setGameFilter('active')" [ngClass]="{'active': gameFilter === 'active'}" class="nav-link ">
                   <p><i class="fa fa-check"></i>&nbsp; Scheduled Campaigns</p>
                </a>
-               <a (click)="setCampaignFilter('archived')" [ngClass]="{'active': campaignFilter === 'archived'}" class="nav-link ">
+               <a (click)="setGameFilter('archived')" [ngClass]="{'active': gameFilter === 'archived'}" class="nav-link ">
                   <p><i class="fa fa-archive"></i>&nbsp; Archived Campaigns</p>
                </a>
             </li>
@@ -22,10 +22,10 @@
          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-header">OPTIONS</li>
             <li class="nav-item">
-               <a (click)="setCampaignFilter('active')" [ngClass]="{'active': campaignFilter === 'active'}" class="nav-link ">
+               <a (click)="setGameFilter('active')" [ngClass]="{'active': gameFilter === 'active'}" class="nav-link">
                   <p><i class="fa fa-check"></i>&nbsp; Live Games</p>
                </a>
-               <a (click)="setCampaignFilter('archived')" [ngClass]="{'active': campaignFilter === 'archived'}" class="nav-link ">
+               <a (click)="setGameFilter('archived')" [ngClass]="{'active': gameFilter === 'archived'}" class="nav-link">
                   <p><i class="fa fa-archive"></i>&nbsp; Archived Games</p>
                </a>
             </li>

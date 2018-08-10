@@ -57,4 +57,33 @@ export class GameService {
       });
   }
 
+
+  pauseCampaigns(gameId) {
+    return this.http.post(`${environment.API_HOST}/studio/game/adverts/pause?token=${this.token}`, {gameId:gameId})
+      .map((response) => {
+        return response;
+      });
+  }
+
+
+  deleteGame(gameId){
+    return this.http.post(`${environment.API_HOST}/studio/game/delete?token=${this.token}`,{gameId: gameId})
+    .map(response => response);
+  }
+
+  archiveGame(gameId,archiveState){
+    return this.http.post(`${environment.API_HOST}/studio/game/archive?token=${this.token}`,{gameId: gameId, archived:archiveState})
+    .map(response => response);
+  }
+
+  activateGame(gameAdAssetId,activeState){
+    return this.http.post(`${environment.API_HOST}/studio/game/activate?token=${this.token}`,{gameAdAssetId: gameAdAssetId, active:activeState})
+    .map(response => response);
+  }
+
+  deleteFile(gameId,fileKey){
+    return this.http.post(`${environment.API_HOST}/studio/game/file/delete?token=${this.token}`,{gameId: gameId,fileKey:fileKey})
+    .map(response => response);
+  }
+
 }

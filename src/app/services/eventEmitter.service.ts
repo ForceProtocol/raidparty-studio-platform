@@ -5,24 +5,24 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class EventService {
     private _listners = new Subject<any>();
-    private campaignFilter = new Subject<any>();
-    private campaignFilterValue: string;
+    private gameFilter = new Subject<any>();
+    private gameFilterValue: string;
 
     listen(): Observable<any> {
        return this._listners.asObservable();
     }
 
-    getCampaignFilter(): Observable<any> {
-    	return this.campaignFilter.asObservable();
+    getGameFilter(): Observable<any> {
+    	return this.gameFilter.asObservable();
     }
 
-    setCampaignFilter(filterBy: string) {
-       this.campaignFilterValue = filterBy;
-       this.campaignFilter.next(filterBy);
+    setGameFilter(filterBy: string) {
+       this.gameFilterValue = filterBy;
+       this.gameFilter.next(filterBy);
     }
 
-    getCampaignFilterValue(){
-        return this.campaignFilterValue;
+    getGameFilterValue(){
+        return this.gameFilterValue;
     }
 
 }
