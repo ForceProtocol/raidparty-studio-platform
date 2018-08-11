@@ -60,8 +60,8 @@
                         Options
                       </button>
                       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a *ngIf="gameAdAsset.approved" class="dropdown-item" (click)="open(stop,gameAdAsset.id,0)">Stop Advert</a>
-                        <a *ngIf="!gameAdAsset.approved" class="dropdown-item" (click)="open(activate,gameAdAsset.id,1)">Approve Advert</a>
+                        <a *ngIf="gameAdAsset.approved" class="dropdown-item" (click)="open(stop,gameAdAsset.id)">Stop Advert</a>
+                        <a *ngIf="!gameAdAsset.approved" class="dropdown-item" (click)="open(approve,gameAdAsset.id)">Approve Advert</a>
                         <a class="dropdown-item" routerLink="/start-campaign/{{ gameAdAsset.game.id + '/' + gameAdAsset.id}}">Download Asset</a>
                       </div>
                     </div>
@@ -79,7 +79,7 @@
 
 
 
-    <ng-template #activate let-c="close" let-d="dismiss">
+    <ng-template #approve let-c="close" let-d="dismiss">
       <div class="modal-header">
         <h4 class="modal-title">Approve Advert</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -88,7 +88,8 @@
       </div>
       <div class="modal-body">
 
-        <p>Are you sure you wish to activate this advert?</p>
+        <p>Are you sure you wish to approve this advert?</p>
+        <p>Once approved players can start seeing this advert within seconds.</p>
 
         <div class="form-group">
           <div class="input-group">
@@ -99,7 +100,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
-        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('activate')">Yes, activate it!</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('approve')">Yes, approve it!</button>
       </div>
     </ng-template>
 
@@ -126,6 +127,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Close" (click)="d('Cross click')">Cancel</button>
-        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('activate')">Yes, stop it!</button>
+        <button type="button" class="btn btn-sm btn-outline-dark btn-danger" (click)="c('stop')">Yes, stop it!</button>
       </div>
     </ng-template>

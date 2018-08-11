@@ -63,7 +63,7 @@ export class CampaignsComponent implements OnInit {
 
             // Format the exposure time in nice format
             if(this.gameAdAssets[key].totalExposure > 1){
-              this.gameAdAssets[key].totalExposure = moment.duration(this.gameAdAssets[key].totalExposure * 10, 'seconds').humanize();
+              this.gameAdAssets[key].totalExposure = moment.duration(this.gameAdAssets[key].totalExposure, 'seconds').humanize();
             }else{
               this.gameAdAssets[key].totalExposure = '0 seconds';
             }
@@ -84,7 +84,7 @@ export class CampaignsComponent implements OnInit {
   }
 
 
-  open(content,gameAdAssetId,activeState = true) {
+  open(content,gameAdAssetId) {
 
     this.selectedCampaignId = gameAdAssetId;
 
@@ -92,10 +92,10 @@ export class CampaignsComponent implements OnInit {
 
       this.closeResult = `Closed with: ${result}`;
 
-      if (result === 'archive') {
-        this.gameAdAssetService.archiveCampaign(gameAdAssetId,true).subscribe((data) => {
+      if (result === 'stop') {
+        this.gameAdAssetService.stopAdvert(gameAdAssetId).subscribe((data) => {
 
-          this.toaster.success("That campaign has been archived", 'Campaign Archived', {
+          this.toaster.success("That advert has been stopped and will now be placed into pending", 'Advert Stopped', {
             timeOut: 3000,
             positionClass: 'toast-top-center'
           });
@@ -110,56 +110,13 @@ export class CampaignsComponent implements OnInit {
         });
       }
 
-      else if (result === 'removeArchive') {
-        this.gameAdAssetService.archiveCampaign(gameAdAssetId,false).subscribe((data) => {
+      else if (result === 'approve') {
+        this.gameAdAssetService.approveAdvert(gameAdAssetId).subscribe((data) => {
 
-          this.toaster.success("That campaign has been moved out of the archive and re-enabled", 'Campaign Re-enabled', {
+          this.toaster.success("That advert has been approved", 'Advert Approved', {
             timeOut: 3000,
             positionClass: 'toast-top-center'
           });
-
-          this.loadGameCampaigns();
-
-          }, errObj => {
-          this.toaster.error(errObj.error.err, 'Error', {
-            timeOut: 3000,
-            positionClass: 'toast-top-center'
-          });
-        });
-      }
-
-      else if (result === 'delete') {
-        this.gameAdAssetService.deleteCampaign(gameAdAssetId).subscribe((data) => {
-
-          this.toaster.success("That campaign has been permanently deleted", 'Campaign Deleted', {
-            timeOut: 3000,
-            positionClass: 'toast-top-center'
-          });
-
-          this.loadGameCampaigns();
-
-          }, errObj => {
-          this.toaster.error(errObj.error.err, 'Error', {
-            timeOut: 3000,
-            positionClass: 'toast-top-center'
-          });
-        });
-      }
-
-      else if(result === 'activate') {
-        this.gameAdAssetService.activateCampaign(gameAdAssetId, activeState).subscribe((data) => {
-
-          if(!activeState){
-            this.toaster.success("That campaign has been paused", 'Campaign Paused', {
-              timeOut: 3000,
-              positionClass: 'toast-top-center'
-            });
-          }else{
-            this.toaster.success("That campaign has been activated", 'Campaign Activated', {
-              timeOut: 3000,
-              positionClass: 'toast-top-center'
-            });
-          }
 
           this.loadGameCampaigns();
 

@@ -46,32 +46,22 @@ export class GameAdAssetService {
   }
 
 
+  stopAdvert(advertId){
+    return this.http.post(`${environment.API_HOST}/studio/game/advert/stop?token=${this.token}`,{gameAdAsset: advertId})
+    .map(response => response);
+  }
+
+  approveAdvert(advertId){
+    return this.http.post(`${environment.API_HOST}/studio/game/advert/approve?token=${this.token}`,{gameAdAsset: advertId})
+    .map(response => response);
+  }
+
   /**
   * Get an individual game ad asset (advertisers campaign)
   */
   getGameAdAsset(gameAdAssetId){
-    return this.http.get(`${environment.API_HOST}/web/advertiser/campaign/${gameAdAssetId}?token=${this.token}`)
-    .map(response => response);
-  }
-
-  deleteCampaign(campaignId){
-    return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/delete?token=${this.token}`,{campaignId: campaignId})
-    .map(response => response);
-  }
-
-  archiveCampaign(campaignId,archiveState){
-    return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/archive?token=${this.token}`,{campaignId: campaignId, archived:archiveState})
-    .map(response => response);
-  }
-
-  activateCampaign(gameAdAssetId,activeState){
-    return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/activate?token=${this.token}`,{gameAdAssetId: gameAdAssetId, active:activeState})
-    .map(response => response);
-  }
-
-  deleteFile(campaignId,fileKey){
-    return this.http.post(`${environment.API_HOST}/web/advertiser/campaign/file/delete?token=${this.token}`,{campaignId: campaignId,fileKey:fileKey})
-    .map(response => response);
+    /*return this.http.get(`${environment.API_HOST}/web/advertiser/campaign/${gameAdAssetId}?token=${this.token}`)
+    .map(response => response);*/
   }
 
 
