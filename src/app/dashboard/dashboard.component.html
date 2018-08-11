@@ -101,8 +101,8 @@
                           <i class="{{platform.fontAwesome}}"></i></a>
                         </li>
                       </ul></td>
-                    <td>{{ game.gameAdAsset.length }}</td>
-                    <td>{{ game.gameAdAsset.length }}</td>
+                    <td>{{ game.liveAdverts }}</td>
+                    <td>{{ game.pendingAdverts }}</td>
                     <td>&#36;0.00</td>
                     <td>
                       <div class="btn-group" role="group">
@@ -111,7 +111,6 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                           <a class="dropdown-item" routerLink="/game/create/{{ game.id }}">Edit Game</a>
-                          <a class="dropdown-item" routerLink="/campaigns/{{ game.id }}">Review Adverts</a>
                           <a class="dropdown-item" (click)="pauseAdverts(game.id)">Pause All Adverts</a>
                           <a *ngIf="gameFilter == 'archived'" class="dropdown-item" (click)="open(removeArchive,game.id)">Re-activate</a>
                           <a *ngIf="gameFilter == 'active'" class="dropdown-item danger" (click)="open(archive,game.id)">Archive Game</a>

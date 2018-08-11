@@ -60,9 +60,11 @@
                         Options
                       </button>
                       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a *ngIf="gameAdAsset.approved" class="dropdown-item" (click)="open(stop,gameAdAsset.id)">Stop Advert</a>
-                        <a *ngIf="!gameAdAsset.approved" class="dropdown-item" (click)="open(approve,gameAdAsset.id)">Approve Advert</a>
-                        <a class="dropdown-item" routerLink="/start-campaign/{{ gameAdAsset.game.id + '/' + gameAdAsset.id}}">Download Asset</a>
+                        <a *ngIf="gameAdAsset.resourceUrlHd" class="dropdown-item" href="{{API_HOST}}/studio/game/advert/download/{{gameAdAsset.id}}/videoUrlHd?token={{token}}">Download HD Video</a>
+                        <a *ngIf="gameAdAsset.resourceUrlSd" class="dropdown-item" href="{{API_HOST}}/studio/game/advert/download/{{gameAdAsset.id}}/videoUrlSd?token={{token}}">Download SD Video</a>
+                        <a *ngIf="gameAdAsset.resourceUrlImg" class="dropdown-item" href="{{API_HOST}}/studio/game/advert/download/{{gameAdAsset.id}}/videoUrlImg?token={{token}}">Download Texture</a>
+                        <a *ngIf="gameAdAsset.approved" class="dropdown-item danger" (click)="open(stop,gameAdAsset.id)">Stop Advert</a>
+                        <a *ngIf="!gameAdAsset.approved" class="dropdown-item success" (click)="open(approve,gameAdAsset.id)">Approve Advert <i class="far fa-check-circle"></i></a>
                       </div>
                     </div>
                   </td>

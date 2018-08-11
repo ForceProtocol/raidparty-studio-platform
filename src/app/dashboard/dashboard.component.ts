@@ -65,6 +65,20 @@ export class DashboardComponent implements OnInit {
           
           for(var key in this.games){
             this.games[key].avatar = this.API_HOST + "/images/games/banners/" + this.games[key].avatar;
+
+            // Find total number of live adverts
+            this.games[key].liveAdverts = this.games[key].gameAdAsset.filter(function(gameAdAsset){
+              if(gameAdAsset.active && gameAdAsset.approved){
+                return true;
+              }
+              return false;
+            }).length;
+
+            // Find total number of pending adverts
+            this.games[key].pendingAdverts = this.games[key].gameAdAsset.filter(function(gameAdAsset){
+              return !gameAdAsset.approved;
+            }).length;
+
           }
 
       }, errObj => {

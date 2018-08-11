@@ -5,6 +5,7 @@ import { GameAdAssetService } from '../services/game-ad-asset.service';
 import { EventService } from '../services/eventEmitter.service';
 import { HelperService } from '../services/helper.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../../environments/environment';
 import * as moment from 'moment';
 
 @Component({
@@ -22,6 +23,8 @@ export class CampaignsComponent implements OnInit {
   campaignFilter: string;
   approved: boolean = true;
   pending: boolean = false;
+  API_HOST: string = environment.API_HOST;
+  token: string;
 
   constructor(
     private authService: AuthService,
@@ -31,6 +34,7 @@ export class CampaignsComponent implements OnInit {
     private modalService: NgbModal,
     private helperService: HelperService,
   ) {
+    this.token = localStorage.getItem('token');
   }
 
   ngOnInit() {
@@ -132,8 +136,6 @@ export class CampaignsComponent implements OnInit {
     });
 
   }
-
-
 
 
 }

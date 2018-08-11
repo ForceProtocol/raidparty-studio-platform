@@ -65,4 +65,14 @@ export class GameAdAssetService {
   }
 
 
+  downloadGameAssets(gameAdAssetId){
+    return this.http.get(`${environment.API_HOST}/studio/game/advert/download/${gameAdAssetId}/videoUrlHd?token=${this.token}`)
+    .map(response => response);
+    /*this.http.get(`${environment.API_HOST}/studio/game/advert/download/${gameAdAssetId}/videoUrlSd?token=${this.token}`)
+    .map(response => response);
+    this.http.get(`${environment.API_HOST}/studio/game/advert/download/${gameAdAssetId}/videoUrlImg?token=${this.token}`)
+    .map(response => response);*/
+  }
+
+
 }

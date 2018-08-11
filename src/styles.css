@@ -10610,3 +10610,12 @@ body.dialog-open {
     padding-top: 10px;
     padding-bottom: 2px;
 }
+
+.dropdown-menu .dropdown-item.success {
+    border-bottom: none;
+    border-radius: 0 0 5px 5px;
+    border-top: 1px solid #dfdfdf;
+    color: #28a745;
+    padding-top: 10px;
+    padding-bottom: 2px;
+}
