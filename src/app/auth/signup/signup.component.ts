@@ -92,4 +92,11 @@ export class SignupComponent implements OnInit {
     this.signupForm.controls['captcha'].setValue(captcha);
   }
 
+
+  formSubmit(event){
+    if(event.keyCode == 13){
+      this.signup();
+    }
+  }
+
 }

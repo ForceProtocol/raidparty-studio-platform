@@ -8,7 +8,7 @@
               <img src="/assets/images/raidparty-logo.png">
             </a>
           </div>
-          <form [formGroup]="loginForm">
+          <form (keydown)="formSubmit($event)" [formGroup]="loginForm">
             <div class="alert alert-info">
               <p>This platform is currently in demo only mode. None of your campaigns will appear in live production games, nor will your
               advertising budget be used.</p>

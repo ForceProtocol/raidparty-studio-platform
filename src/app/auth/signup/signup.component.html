@@ -9,7 +9,7 @@
             </a>
           </div>
 
-          <form [formGroup]="signupForm">
+          <form (keydown)="formSubmit($event)" [formGroup]="signupForm">
             
             <div class="form-heading mb-4 text-center">
               <h3>Create your account</h3>

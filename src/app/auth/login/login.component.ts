@@ -62,4 +62,10 @@ export class LoginComponent implements OnInit {
         });
   }
 
+  formSubmit(event){
+    if(event.keyCode == 13){
+      this.login();
+    }
+  }
+
 }

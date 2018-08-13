@@ -97,4 +97,14 @@ export class ForgotPasswordComponent implements OnInit {
       });
   }
 
+  formSubmit(event,formType){
+    if(event.keyCode == 13){
+      if(formType == 'changePassword'){
+        this.changePassword();
+      }else if(formType == 'resetPassword'){
+        this.resetPassword();
+      }
+    }
+  }
+
 }
