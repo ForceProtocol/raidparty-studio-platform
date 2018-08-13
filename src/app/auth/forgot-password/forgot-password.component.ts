@@ -15,7 +15,7 @@ export class ForgotPasswordComponent implements OnInit {
   changePasswordForm: FormGroup;
   error: string;
   isForgetPassword: boolean;
-  userId: string;
+  studio: string;
   pin: string;
   email: string;
 
@@ -43,7 +43,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.activatedRoute.snapshot.queryParams.email) {
 
       this.isForgetPassword = false;
-      this.userId = this.activatedRoute.snapshot.queryParams.user;
+      this.studio = this.activatedRoute.snapshot.queryParams.user;
       this.email = this.activatedRoute.snapshot.queryParams.email;
       this.pin = this.activatedRoute.snapshot.queryParams.pin;
 
@@ -52,7 +52,7 @@ export class ForgotPasswordComponent implements OnInit {
         passwordCheck: ['', Validators.required],
         pin: [this.pin,Validators.required],
         email: [this.email,Validators.required],
-        userId: [this.userId,Validators.required]
+        studio: [this.studio,Validators.required]
       });
 
     } else {
