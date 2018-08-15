@@ -25,20 +25,21 @@
 
         <div class="row">
 
-          <div class="col-10 col-md-10">
+          <div class="col-11 col-md-11">
 
             <div *ngIf="gameAdAssets.length < 1" class="alert alert-info">
               <p *ngIf="campaignFilter == 'approved'">You do not have any approved advertising campaigns</p>
               <p *ngIf="campaignFilter == 'pending'">You do not have any pending advertising campaigns</p>
             </div>
 
-            <table *ngIf="gameAdAssets.length > 0" class="table table-hover table-dark">
+            <table *ngIf="gameAdAssets.length > 0" class="table table-hover table-striped table-dark">
               <thead>
                 <tr>
                   <th></th>
                   <th>Game</th>
                   <th>Game Asset</th>
-                  <th>Exposure</th>
+                  <th>Bid / Max. Daily <i ngbTooltip="Bid rate is per 1,000 unique game sessions / Max daily rate is maximum to be paid per day" class="fa fa-question-circle"></i></th>
+                  <th>Exposure / Avg. Exposure <i ngbTooltip="Total Exposure / Unique Sessions" class="fa fa-question-circle"></i></th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Status</th>
@@ -50,7 +51,8 @@
                   <td><img class="img-thumbnail img-fluid campaign-list-thumbnail" src={{gameAdAsset.gameAsset.screenshot}} /></td>
                   <td>{{ gameAdAsset.game.title }}</td>
                   <td>{{ gameAdAsset.gameAsset.title }}</td>
-                  <td>{{ gameAdAsset.totalExposure }}</td>
+                  <td>&#36;{{ gameAdAsset.maxBid }} / &#36;{{ gameAdAsset.dailyBudget }}</td>
+                  <td>{{ gameAdAsset.totalExposure }} / {{ gameAdAsset.avgExposurePerSession }}</td>
                   <td>{{ gameAdAsset.startDate }}</td>
                   <td>{{ gameAdAsset.endDate }}</td>
                   <td>{{ gameAdAsset.status }} &nbsp;<i *ngIf="gameAdAsset.status == 'Pending'" ngbTooltip="Pending status means this campaign is awaiting your approval" class="fa fa-question-circle"></i></td>

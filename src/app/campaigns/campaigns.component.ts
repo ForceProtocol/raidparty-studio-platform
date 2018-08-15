@@ -62,14 +62,20 @@ export class CampaignsComponent implements OnInit {
           this.gameAdAssets = data['campaigns'];
 
           for(var key in data['campaigns']){
-            this.gameAdAssets[key].startDate = moment(this.gameAdAssets[key].startDate).format('llll');
-            this.gameAdAssets[key].endDate = moment(this.gameAdAssets[key].endDate).format('llll');
+            this.gameAdAssets[key].startDate = moment(this.gameAdAssets[key].startDate).format('lll');
+            this.gameAdAssets[key].endDate = moment(this.gameAdAssets[key].endDate).format('lll');
 
             // Format the exposure time in nice format
             if(this.gameAdAssets[key].totalExposure > 1){
               this.gameAdAssets[key].totalExposure = moment.duration(this.gameAdAssets[key].totalExposure, 'seconds').humanize();
             }else{
-              this.gameAdAssets[key].totalExposure = '0 seconds';
+              this.gameAdAssets[key].totalExposure = 0;
+            }
+
+            if(this.gameAdAssets[key].avgExposurePerSession > 0){
+              this.gameAdAssets[key].avgExposurePerSession = moment.duration(this.gameAdAssets[key].avgExposurePerSession, 'seconds').humanize();
+            }else{
+              this.gameAdAssets[key].avgExposurePerSession = 0;
             }
 
             this.gameAdAssets[key].status = this.helperService.capitalize(this.gameAdAssets[key].status);
